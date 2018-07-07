@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
 from core.models import Chapter, Course, Question, QuestionSet, QuickNotes, Subject, Syllabus, Videos, Unit, Options
+from entrance.models import Entrance, EntranceQuestions
+from package.models import Package, Tokens
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -71,3 +73,31 @@ class OptionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Options
         exclude = ()
+
+
+class EntranceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Entrance
+        exclude = ()
+
+
+class EntranceQuestionsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = EntranceQuestions
+        exclude = ()
+
+
+class PackageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Package
+        exclude = ()
+
+
+class TokenSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tokens
+        fields = ('activated_date', 'package', 'user')
