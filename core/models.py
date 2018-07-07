@@ -2,26 +2,27 @@ from django.db import models
 
 QUESTION_SET_CHOICES = [(0, "Past Questions"), (1, "Mock Sets")]
 
+
 class Course(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=250)
 
 
 class Subject(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=250)
     course = models.ForeignKey(Course, related_name="subjects",  on_delete=models.CASCADE)
 
 
 class Unit(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=250)
     subject = models.ForeignKey(Subject, related_name="units",  on_delete=models.CASCADE)
 
 
 class Chapter(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=250)
     chapter = models.ForeignKey(Unit, related_name="chapters",  on_delete=models.CASCADE)
 
 
-class Syllabus(models.model):
+class Syllabus(models.Model):
     unit = models.ForeignKey(Unit, related_name="syllabuslist", on_delete=models.CASCADE)
     syllabus = models.TextField()
 
@@ -54,4 +55,4 @@ class Question(models.Model):
 class Options(models.Model):
     question = models.ForeignKey(Question, related_name="options", on_delete=models.CASCADE)
     correct = models.BooleanField(default=False)
-    answer = models.CharField()
+    answer = models.CharField(max_length=250)

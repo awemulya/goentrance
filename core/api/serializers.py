@@ -1,0 +1,73 @@
+from rest_framework import serializers
+
+from core.models import Chapter, Course, Question, QuestionSet, QuickNotes, Subject, Syllabus, Videos, Unit, Options
+
+
+class CourseSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Course
+        exclude = ()
+
+
+class SubjectSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Subject
+        exclude = ()
+
+
+class UnitSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Unit
+        exclude = ()
+
+
+class ChapterSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Chapter
+        exclude = ()
+
+
+class SyllabusSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Syllabus
+        exclude = ()
+
+
+class VideosSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Videos
+        exclude = ()
+
+
+class QuickNotesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = QuickNotes
+        exclude = ()
+
+
+class QuestionSetSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = QuestionSet
+        exclude = ()
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Question
+        exclude = ()
+
+
+class OptionsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Options
+        exclude = ()

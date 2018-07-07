@@ -1,2 +1,5 @@
+db.sqlite3
 *.pyc
 .idea/
+go/local_settings.py
+
