@@ -11,6 +11,6 @@ class Entrance(models.Model):
 
 
 class EntranceQuestions(models.Model):
-    entrance = models.ForeignKey(Entrance, related_name="entrance_questions")
-    question = models.ForeignKey(Question)
-    answer = models.ForeignKey(Options)
+    entrance = models.ForeignKey(Entrance, related_name="entrance_questions", on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Options, on_delete=models.CASCADE)
