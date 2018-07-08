@@ -9,8 +9,20 @@ class Entrance(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     time_seconds = models.IntegerField(default=0)
 
+    class Meta:
+        ordering = ['user']
+
+    def __str__(self):
+        return self.user
+
 
 class EntranceQuestions(models.Model):
     entrance = models.ForeignKey(Entrance, related_name="entrance_questions", on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Options, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['question']
+
+    def __str__(self):
+        return self.question
