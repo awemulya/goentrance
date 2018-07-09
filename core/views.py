@@ -3,12 +3,15 @@
 
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.views.generic import TemplateView
 from .models import Course, Subject
 from django.urls import reverse_lazy
 from .forms import CourseCreateForm, SubjectCreateForm
 
 
 # Create your views here.
+class CoresDashboardView(TemplateView):
+    template_name = 'core/cores_dashboard.html'
 
 class CourseListView(ListView):
 	model = Course
@@ -25,20 +28,20 @@ class CourseCreateView(CreateView):
 	#fields = ('name',)
 	form_class = CourseCreateForm
 	template_name = 'core/course_form.html'
-	success_url = reverse_lazy('course_list')
+	success_url = reverse_lazy('core:course_list')
 
 
 class CourseUpdateView(UpdateView):
 	model = Course
 	template_name = 'core/course_form.html'
 	fields = ('name',)
-	success_url = reverse_lazy('course_list')
+	success_url = reverse_lazy('core:course_list')
 
 
 class CourseDeleteView(DeleteView):
 	model = Course
 	template_name = 'core/course_delete.html'
-	success_url = reverse_lazy('course_list')
+	success_url = reverse_lazy('core:course_list')
 
 
 class SubjectListView(ListView):
@@ -53,20 +56,20 @@ class SubjectDetailView(DetailView):
 
 class SubjectCreateView(CreateView):
 	model = Subject
-	#fields = ('name',)
+	#fields = ('name', 'course',)
 	form_class = SubjectCreateForm
 	template_name = 'core/subject_form.html'
-	success_url = reverse_lazy('subject_list')
+	success_url = reverse_lazy('core:subject_list')
 
 
 class SubjectUpdateView(UpdateView):
 	model = Subject
 	template_name = 'core/subject_form.html'
-	fields = ('name',)
-	success_url = reverse_lazy('subject_list')
+	fields = ('name', 'course',)
+	success_url = reverse_lazy('core:subject_list')
 
 
 class SubjectDeleteView(DeleteView):
 	model = Subject
 	template_name = 'core/subject_delete.html'
-	success_url = reverse_lazy('subject_list')
+	success_url = reverse_lazy('core:subject_list')
