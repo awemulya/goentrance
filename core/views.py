@@ -22,6 +22,11 @@ class CourseDetailView(DetailView):
 	model = Course
 	template_name = 'core/course_detail.html'
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['subjects'] = Subject.objects.filter(course_id=self.kwargs['pk'])
+		return context
+
 
 class CourseCreateView(CreateView):
 	model = Course
