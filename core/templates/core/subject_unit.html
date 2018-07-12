@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SUBJECT UNIT</title>
+</head>
+<body>
+	{% for unit in subject_unit %}
+	<a href="{% url 'core:subject_unit' unit.pk %}">{{ unit.name }}</a><br><br>
+	{% for chapter in unit.chapters.all %}
+	{{ chapter }}
+	{% endfor %}
+	{% endfor %}
+</body>
+</html>

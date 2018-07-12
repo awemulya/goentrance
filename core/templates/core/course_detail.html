@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Courses Detail</title>
+	<title>Course Detail</title>
 </head>
 <body>
-	{{ object.name}}
+	{{ object.name }}
 	<br><br>
 	{% for subject in subjects %}<br>
-	{{ subject }}
+	<a href="{% url 'core:subject_unit' subject.pk %}">{{ subject }}</a>
 	{% endfor %}
 </body>
 </html>

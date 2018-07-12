@@ -37,7 +37,7 @@ class Unit(models.Model):
 
 class Chapter(models.Model):
     name = models.CharField(max_length=250)
-    chapter = models.ForeignKey(Unit, related_name="chapters",  on_delete=models.CASCADE)
+    unit = models.ForeignKey(Unit, related_name="chapters",  on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['name']
@@ -87,6 +87,7 @@ class QuestionSet(models.Model):
     type = models.IntegerField(default=0, choices=QUESTION_SET_CHOICES)
     name = models.CharField(max_length=64)
     chapter = models.ForeignKey(Chapter, related_name="sets", on_delete=models.CASCADE)
+    time = models.TimeField()
 
     class Meta:
         ordering = ['name']

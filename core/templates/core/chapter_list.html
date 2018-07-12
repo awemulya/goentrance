@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CHAPTER LIST</title>
+</head>
+<body>
+{% for obj in object_list %}
+	{{forloop.counter}}. <a href="{% url 'core:chapter_detail' obj.id %}">{{ obj.name }}</a>
+	&nbsp;&nbsp;&nbsp;<a href="{% url 'core:chapter_edit' obj.id %}">Edit</a>
+	&nbsp;&nbsp;&nbsp;<a href="{% url 'core:chapter_delete' obj.id %}">Delete</a>
+	<br>
+{% endfor %}
+<br><br><br>
+<a href="{% url 'core:chapter_add' %}">Add New Chapter</a>
+</body>
+</html>
