@@ -8,10 +8,10 @@
 	{{subject.name}}
 	{% for unit in subject_unit %}
 	<h4>Units</a></h4>
-	<a href="{% url 'core:subject_unit' unit.pk %}">{{ unit.name }}</a><br><br>
+	{{ forloop.counter }}.<a href="{% url 'core:subject_unit' unit.pk %}">{{ unit.name }}</a><br><br>
 	<h4>Chapters</a></h4>
 	{% for chapter in unit.chapters.all %}
-	{{ chapter }}
+	{{ forloop.counter }}.{{ chapter }}
 	{% endfor %}
 	{% endfor %}
 </body>

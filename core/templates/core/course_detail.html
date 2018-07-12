@@ -9,7 +9,7 @@
 	<br><br>
 	<h4>Subjects</a></h4>
 	{% for subject in subjects %}<br>
-	<a href="{% url 'core:subject_unit' subject.pk %}">{{ subject }}</a>
+	{{ forloop.counter }}.<a href="{% url 'core:subject_unit' subject.pk %}">{{ subject }}</a>
 	{% endfor %}
 </body>
 </html>
