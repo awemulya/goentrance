@@ -4,6 +4,7 @@
 	<title>CHAPTER LIST</title>
 </head>
 <body>
+<h4><a href="#" title="">Chapters List</a></h4>
 {% for obj in object_list %}
 	{{forloop.counter}}. <a href="{% url 'core:chapter_detail' obj.id %}">{{ obj.name }}</a>
 	&nbsp;&nbsp;&nbsp;<a href="{% url 'core:chapter_edit' obj.id %}">Edit</a>
