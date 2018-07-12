@@ -4,10 +4,10 @@
 	<title>Course Detail</title>
 </head>
 <body>
-	<h4><a href="#" title="">Courses</a></h4>
+	<h4>Courses</a></h4>
 	{{ object.name }}
 	<br><br>
-	<h4><a href="#" title="">Subjects</a></h4>
+	<h4>Subjects</a></h4>
 	{% for subject in subjects %}<br>
 	<a href="{% url 'core:subject_unit' subject.pk %}">{{ subject }}</a>
 	{% endfor %}
