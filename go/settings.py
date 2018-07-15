@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # local apps
+  'webpack_loader',
     'core',
     'entrance',
     'package'
@@ -63,7 +64,7 @@ ROOT_URLCONF = 'go.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS':  [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,6 +145,24 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
+}
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'dist'),
+    os.path.join(BASE_DIR, 'static'),
+)
+STATIC_ROOT = os.path.join(BASE_DIR, 'public')
+STATIC_URL = '/static/'
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE':  False,
+        'BUNDLE_DIR_NAME': '',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    }
 }
 
 try:
