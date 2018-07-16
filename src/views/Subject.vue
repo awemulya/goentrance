@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import CoursesContainer from '@/modules/courses'
+import CoursesContainer from '@/modules/subjects'
 
 export default {
   name: 'Subject',
