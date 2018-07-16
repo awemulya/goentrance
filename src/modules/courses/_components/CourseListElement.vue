@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td v-text="course.name"></td>
+    <td><router-link :to="{ name: 'Subject', params: { courseId: course.id }}">{{course.name}}</router-link></td>
   </tr>
 </template>
 
