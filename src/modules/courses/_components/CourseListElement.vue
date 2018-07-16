@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td v-text="product.name"></td>
+    <td v-text="course.name"></td>
   </tr>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
   name: 'CoursetListElement',
   props: {
-    product: {
+    course: {
       type: Object
     }
   }

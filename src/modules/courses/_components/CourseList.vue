@@ -4,9 +4,9 @@
       <th>Courses</th>
     </tr>
     <CourseListElement
-      v-for="cource in courses"
-      :key="cource.id"
-      :product="cource"
+      v-for="course in courses"
+      :key="course.id"
+      :course="course"
     />
     <tr class="table-row__fallback" v-if="!courses || courses.length === 0">
       <td colspan="3">No Courses Available</td>
