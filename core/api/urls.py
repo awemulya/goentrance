@@ -24,6 +24,7 @@ router.register(r'package', viewset.PackageViewSet, base_name='package')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('course-subjects/', viewset.CourseSubjectsViewSet.as_view({'get': 'list', }), name="course_subject"),
+    path('course-dashboard/', viewset.CourseSubjectsViewSet.as_view({'get': 'list', }), name="course_dashboard"),
+    # path('subjects/', viewset.CourseSubjectsViewSet.as_view({'get': 'list', }), name="subjects"),
 
 ]

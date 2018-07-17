@@ -51,6 +51,17 @@ class CourseSubjectsViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
+# class SubjectsViewSet(viewsets.ReadOnlyModelViewSet):
+#     serializer_class = SubjectSerializer
+#
+#     def get_queryset(self):
+#         queryset = Subject.objects.all()
+#         course_id = self.request.query_params.get('course', None)
+#         if course_id is not None:
+#             queryset = queryset.filter(course_id=course_id)
+#         return queryset
+
+
 class ChapterViewSet(viewsets.ModelViewSet):
     serializer_class = ChapterSerializer
     queryset = Chapter.objects.all()

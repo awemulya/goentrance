@@ -19,6 +19,13 @@ class SubjectSerializer(serializers.ModelSerializer):
         exclude = ()
 
 
+# class SubjectUnitChaptersSerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         model = Subject
+#         exclude = ()
+
+
 class UnitSerializer(serializers.ModelSerializer):
 
     class Meta:
