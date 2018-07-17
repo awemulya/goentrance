@@ -159,4 +159,5 @@ class SubjectUnitView(TemplateView):
 		context = super().get_context_data(**kwargs)
 		context['subject'] = Subject.objects.get(id=self.kwargs['subject_pk'])
 		context['subject_unit'] = Unit.objects.filter(subject_id=self.kwargs['subject_pk'])
+		context['chapters'] = Chapter.objects.filter(unit__subject_id=self.kwargs['subject_pk'])
 		return context
