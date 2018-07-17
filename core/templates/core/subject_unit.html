@@ -4,15 +4,26 @@
 	<title>SUBJECT UNIT</title>
 </head>
 <body>
-	<h4>Subjects</a></h4>
-	{{subject.name}}
-	{% for unit in subject_unit %}
-	<h4>Units</a></h4>
-	{{ forloop.counter }}.<a href="{% url 'core:subject_unit' unit.pk %}">{{ unit.name }}</a><br><br>
-	<h4>Chapters</a></h4>
-	{% for chapter in unit.chapters.all %}
-	{{ forloop.counter }}.{{ chapter }}
-	{% endfor %}
-	{% endfor %}
+	<div>
+		<h4>Subjects</a></h4>
+		{{subject.name}}
+	</div>
+	<div>
+		<h4>Units</a></h4>
+		{% for unit in subject_unit %}	
+		{{ forloop.counter }}.<a href="{% url 'core:subject_unit' unit.pk %}">{{ unit.name }}</a>
+		{% endfor %}
+		<br><br>
+		<a href="{% url 'core:unit_add' %}">Add New Unit</a>
+	</div>
+	<br><br>
+	<div>
+		<h4>Chapters</a></h4>
+		{% for chapter in subject_unit %}
+		{{ forloop.counter }}.{{ chapter.name }}
+		{% endfor %}	
+		<br><br>
+		<a href="{% url 'core:chapter_add' %}">Add New Chapter</a>
+	</div>
 </body>
 </html>

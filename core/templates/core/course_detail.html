@@ -10,6 +10,10 @@
 	<h4>Subjects</a></h4>
 	{% for subject in subjects %}<br>
 	{{ forloop.counter }}.<a href="{% url 'core:subject_unit' subject.pk %}">{{ subject }}</a>
+	{% endfor %}<br><br>
+	{% for obj in object_list %}
+	{{forloop.counter}}. <a href="{% url 'core:subject_detail' obj.id %}">{{ obj.name }}</a>
 	{% endfor %}
+	<a href="{% url 'core:subject_add' %}">Add New Subject</a>
 </body>
 </html>
