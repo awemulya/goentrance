@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>DELETE UNIT</title>
+	<title>DELETE COURSE</title>
 </head>
 <body>
-<form method="POST" action="{% url 'unit_delete' object.id %}">{% csrf_token %}
+<form method="POST" action="{% url 'core:unit_delete' object.id %}">{% csrf_token %}
 Click Yes to delete {{ object.name }}
 <button type="submit">YES</button>
 </form>
