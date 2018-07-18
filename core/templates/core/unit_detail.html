@@ -11,5 +11,7 @@
 	{% for chapter in chapters %}<br>
 	{{ chapter }}
 	{% endfor %}
+	<br><br>
+	<a href="{% url 'core:chapter_add' %}">Add New Chapter</a> 
 </body>
 </html>
