@@ -28,12 +28,14 @@ class Unit(models.Model):
     name = models.CharField(max_length=250)
     subject = models.ForeignKey(Subject, related_name="units",  on_delete=models.CASCADE, null=True)
 
-
     class Meta:
         ordering = ['name']
 
     def __str__(self):
         return self.name
+
+    def chapters(self):
+      return self.chapters.values('name')
 
 
 class Chapter(models.Model):

@@ -30,7 +30,7 @@ class UnitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Unit
-        exclude = ()
+        fields = ('id', 'name', 'subject', 'chapters',)
 
 
 class ChapterSerializer(serializers.ModelSerializer):
