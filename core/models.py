@@ -26,13 +26,16 @@ class Subject(models.Model):
 
 class Unit(models.Model):
     name = models.CharField(max_length=250)
-    subject = models.ForeignKey(Subject, related_name="units",  on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, related_name="units",  on_delete=models.CASCADE, null=True)
 
     class Meta:
         ordering = ['name']
 
     def __str__(self):
         return self.name
+
+    def chapters(self):
+      return self.chapters.values('name')
 
 
 class Chapter(models.Model):
@@ -87,7 +90,7 @@ class QuestionSet(models.Model):
     type = models.IntegerField(default=0, choices=QUESTION_SET_CHOICES)
     name = models.CharField(max_length=64)
     chapter = models.ForeignKey(Chapter, related_name="sets", on_delete=models.CASCADE)
-    time = models.TimeField()
+    time = models.TimeField(blank=True, null=True)
 
     class Meta:
         ordering = ['name']

@@ -10,9 +10,7 @@ router.register(r'users', viewset.UserViewSet)
 router.register(r'tokens', viewset.TokenViewSet)
 router.register(r'courses', viewset.CourseViewSet, base_name='courses')
 router.register(r'chapters', viewset.ChapterViewSet, base_name='chapters')
-router.register(r'subjects', viewset.SubjectViewSet, base_name='subjects')
 router.register(r'syllabus', viewset.SyllabusViewSet, base_name='syllabus')
-router.register(r'units', viewset.UnitViewSet, base_name='units')
 router.register(r'question-sets', viewset.QuestionSetViewSet, base_name='question_sets')
 router.register(r'questions', viewset.QuestionViewSet, base_name='questions')
 router.register(r'quick-notes', viewset.QuickNotesViewSet, base_name='quick_notes')
@@ -25,5 +23,7 @@ router.register(r'package', viewset.PackageViewSet, base_name='package')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('course-dashboard/', viewset.CourseSubjectsViewSet.as_view({'get': 'list', }), name="course_dashboard"),
+    path('subject-detail/<int:subject_id>/', viewset.SubjectsViewSet.as_view({'get': 'list', }), name="subjects"),
 
 ]
