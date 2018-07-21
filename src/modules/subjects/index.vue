@@ -1,5 +1,5 @@
 <template>
-  <SubjectList :courses="courses" />
+  <SubjectList :courses="subjects" />
 </template>
 
 <script>
@@ -14,8 +14,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      courses: '$_subjects/courses'
-    })
+      subjects: '$_subjects/subjects'
+    }),
+    course () {
+      // We will see what `params` is shortly
+      return this.$route.params.courseId
+    }
   },
   created () {
     const STORE_KEY = '$_subjects'
@@ -25,7 +29,7 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('$_subjects/getCourses')
+    this.$store.dispatch('$_subjects/getSubjects', this.course)
   }
 }
 </script>

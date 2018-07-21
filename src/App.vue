@@ -32,7 +32,7 @@
       <v-container fluid fill-height>
         <v-layout
           justify-center
-          align-center
+          align-left
         >
           <v-flex text-xs-center>
           <router-view></router-view>

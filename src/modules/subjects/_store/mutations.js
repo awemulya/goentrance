@@ -1,7 +1,7 @@
-const COURSES_UPDATED = (state, courses) => {
-  state.courses = courses
+const SUBJECTS_UPDATED = (state, subjects) => {
+  state.subjects = subjects
 }
 
 export default {
-  COURSES_UPDATED
+  SUBJECTS_UPDATED
 }
