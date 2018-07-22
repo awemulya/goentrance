@@ -1,24 +1,43 @@
-# from django.http import HttpResponseRidirect
-# from django.shortcuts import get_object_or_404, render
-
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.views.generic import TemplateView
-from .models import Course, Subject, Unit, Chapter
 from django.urls import reverse_lazy
+
+from .models import Course, Subject, Unit, Chapter
 from .forms import CourseCreateForm, SubjectCreateForm, UnitCreateForm, ChapterCreateForm
 
 
+class SuperAdminMixin(LoginRequiredMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            if request.user.is_superuser:
+                return super(SuperAdminMixin, self).dispatch(request, *args, **kwargs)
+        raise PermissionDenied
+
+
 # Create your views here.
-class CoresDashboardView(TemplateView):
+class CoresDashboardView(SuperAdminMixin, TemplateView):
     template_name = 'core/cores_dashboard.html'
 
-class CourseListView(ListView):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            if request.user.is_superuser:
+                return super(SuperAdminMixin, self).dispatch(request, *args, **kwargs)
+
+            else:
+                return HttpResponseRedirect('/spa#/')
+
+        raise PermissionDenied
+
+
+class CourseListView(SuperAdminMixin, ListView):
 	model = Course
 	template_name = 'core/course_list.html'
 
 
-class CourseDetailView(DetailView):
+class CourseDetailView(SuperAdminMixin, DetailView):
 	model = Course
 	template_name = 'core/course_detail.html'
 
@@ -28,7 +47,7 @@ class CourseDetailView(DetailView):
 		return context
 
 
-class CourseCreateView(CreateView):
+class CourseCreateView(SuperAdminMixin, CreateView):
 	model = Course
 	#fields = ('name',)
 	form_class = CourseCreateForm
@@ -36,25 +55,25 @@ class CourseCreateView(CreateView):
 	success_url = reverse_lazy('core:course_list')
 
 
-class CourseUpdateView(UpdateView):
+class CourseUpdateView(SuperAdminMixin, UpdateView):
 	model = Course
 	template_name = 'core/course_form.html'
 	fields = ('name',)
 	success_url = reverse_lazy('core:course_list')
 
 
-class CourseDeleteView(DeleteView):
+class CourseDeleteView(SuperAdminMixin, DeleteView):
 	model = Course
 	template_name = 'core/course_delete.html'
 	success_url = reverse_lazy('core:course_list')
 
 
-class SubjectListView(ListView):
+class SubjectListView(SuperAdminMixin, ListView):
 	model = Subject
 	template_name = 'core/subject_list.html'
 
 
-class SubjectDetailView(DetailView):
+class SubjectDetailView(SuperAdminMixin, DetailView):
 	model = Subject
 	template_name = 'core/subject_detail.html'
 
@@ -64,7 +83,7 @@ class SubjectDetailView(DetailView):
 		return context
 
 
-class SubjectCreateView(CreateView):
+class SubjectCreateView(SuperAdminMixin, CreateView):
 	model = Subject
 	#fields = ('name', 'course',)
 	form_class = SubjectCreateForm
@@ -72,25 +91,25 @@ class SubjectCreateView(CreateView):
 	success_url = reverse_lazy('core:subject_list')
 
 
-class SubjectUpdateView(UpdateView):
+class SubjectUpdateView(SuperAdminMixin, UpdateView):
 	model = Subject
 	template_name = 'core/subject_form.html'
 	fields = ('name', 'course',)
 	success_url = reverse_lazy('core:subject_list')
 
 
-class SubjectDeleteView(DeleteView):
+class SubjectDeleteView(SuperAdminMixin, DeleteView):
 	model = Subject
 	template_name = 'core/subject_delete.html'
 	success_url = reverse_lazy('core:subject_list')
 
 
-class UnitListView(ListView):
+class UnitListView(SuperAdminMixin, ListView):
 	model = Unit
 	template_name = 'core/unit_list.html'
 
 
-class UnitDetailView(DetailView):
+class UnitDetailView(SuperAdminMixin, DetailView):
 	model = Unit
 	template_name = 'core/unit_detail.html'
 
@@ -100,7 +119,7 @@ class UnitDetailView(DetailView):
 		return context
 
 
-class UnitCreateView(CreateView):
+class UnitCreateView(SuperAdminMixin, CreateView):
 	model = Unit
 	#fields = ('name', 'subject',)
 	form_class = UnitCreateForm
@@ -108,30 +127,30 @@ class UnitCreateView(CreateView):
 	success_url = reverse_lazy('core:unit_list')
 
 
-class UnitUpdateView(UpdateView):
+class UnitUpdateView(SuperAdminMixin, UpdateView):
 	model = Unit
 	template_name = 'core/unit_form.html'
 	fields = ('name', 'subject',)
 	success_url = reverse_lazy('core:unit_list')
 
 
-class UnitDeleteView(DeleteView):
+class UnitDeleteView(SuperAdminMixin, DeleteView):
 	model = Unit
 	template_name = 'core/unit_delete.html'
 	success_url = reverse_lazy('core:unit_list')
 
 
-class ChapterListView(ListView):
+class ChapterListView(SuperAdminMixin, ListView):
 	model = Chapter
 	template_name = 'core/chapter_list.html'
 
 
-class ChapterDetailView(DetailView):
+class ChapterDetailView(SuperAdminMixin, DetailView):
 	model = Chapter
 	template_name = 'core/chapter_detail.html'
 
 
-class ChapterCreateView(CreateView):
+class ChapterCreateView(SuperAdminMixin, CreateView):
 	model = Chapter
 	#fields = ('name', 'unit',)
 	form_class = ChapterCreateForm
@@ -139,20 +158,20 @@ class ChapterCreateView(CreateView):
 	success_url = reverse_lazy('core:chapter_list')
 
 
-class ChapterUpdateView(UpdateView):
+class ChapterUpdateView(SuperAdminMixin, UpdateView):
 	model = Chapter
 	template_name = 'core/chapter_form.html'
 	fields = ('name', 'unit',)
 	success_url = reverse_lazy('core:chapter_list')
 
 
-class ChapterDeleteView(DeleteView):
+class ChapterDeleteView(SuperAdminMixin, DeleteView):
 	model = Chapter
 	template_name = 'core/chapter_delete.html'
 	success_url = reverse_lazy('core:chapter_list')
 
 
-class SubjectUnitView(TemplateView):
+class SubjectUnitView(SuperAdminMixin, TemplateView):
 	template_name = 'core/subject_unit.html'
 
 	def get_context_data(self, **kwargs):
