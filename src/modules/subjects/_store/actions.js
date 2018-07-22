@@ -1,9 +1,9 @@
 import api from '../_api'
 
-const getCourses = (context) => {
-  api.fetchCourses()
+const getSubjects = (context, course) => {
+  api.fetchSubjects(course)
     .then((response) => {
-      context.commit('COURSES_UPDATED', response.data)
+      context.commit('SUBJECTS_UPDATED', response.data)
     })
     .catch((error) => {
       // eslint-disable-next-line
@@ -12,5 +12,5 @@ const getCourses = (context) => {
 }
 
 export default {
-  getCourses
+  getSubjects
 }

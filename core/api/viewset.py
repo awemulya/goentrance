@@ -52,13 +52,13 @@ class CourseSubjectsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class SubjectsViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = UnitSerializer
+    serializer_class = SubjectSerializer
 
     def get_queryset(self):
-        queryset = Unit.objects.all()
-        subject_id = self.kwargs.get('subject_id')
-        if subject_id is not None:
-            queryset = queryset.filter(subject_id=subject_id)
+        queryset = Subject.objects.all()
+        course_id = self.kwargs.get('course')
+        if course_id is not None:
+            queryset = queryset.filter(course_id=course_id)
         return queryset
 
 

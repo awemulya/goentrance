@@ -1,5 +1,5 @@
-const courses = state => state.courses
+const subjects = state => state.subjects
 
 export default {
-  courses
+  subjects
 }
