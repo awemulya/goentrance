@@ -7,7 +7,7 @@ from entrance.models import Entrance, EntranceQuestions
 from package.models import Package, Tokens
 from .serializers import ChapterSerializer, CourseSerializer, QuestionSerializer, QuestionSetSerializer, QuickNotesSerializer,\
     SubjectSerializer, SyllabusSerializer, VideosSerializer, UnitSerializer, OptionsSerializer, EntranceSerializer, \
-    EntranceQuestionsSerializer, PackageSerializer, TokenSerializer
+    EntranceQuestionsSerializer, PackageSerializer, TokenSerializer, CourseDetailSerializer
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -38,6 +38,14 @@ class TokenViewSet(viewsets.ModelViewSet):
 class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
+
+    # def get_serializer_class(self):
+    #   print(self.action)
+    #   if self.action == 'list':
+    #     return CourseSerializer
+    #   if self.action == 'retrieve':
+    #     return CourseDetailSerializer
+    #   return CourseDetailSerializer  # I dont' know what you want for create/destroy/update.
 
 
 class CourseSubjectsViewSet(viewsets.ReadOnlyModelViewSet):

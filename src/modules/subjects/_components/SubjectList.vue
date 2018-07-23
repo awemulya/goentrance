@@ -1,29 +1,26 @@
-<template>
-  <table>
-    <tr>
-      <th>Subjects</th>
-    </tr>
-    <CourseListElement
-      v-for="course in courses"
-      :key="course.id"
-      :course="course"
-    />
-    <tr class="table-row__fallback" v-if="!courses || courses.length === 0">
-      <td colspan="3">No Courses Available</td>
-    </tr>
-  </table>
-</template>
+  <template>
+  <v-list>
+   <v-list-tile v-for="item in subjects" :key="item.title" :to="{path: 'chapters/' + item.id}">
+     <v-list-tile-action>
+              <v-icon>Book</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>{{item.name}}</v-list-tile-title>
+            </v-list-tile-content>
+   </v-list-tile>
+  </v-list>
+  </template>
 
 <script>
-import CourseListElement from './CourseListElement'
+// import SubjectListElement from './SubjectListElement'
 
 export default {
-  name: 'CourseList',
+  name: 'SubjectList',
   components: {
-    CourseListElement
+    // SubjectListElement
   },
   props: {
-    courses: {
+    subjects: {
       type: Array
     }
   }
