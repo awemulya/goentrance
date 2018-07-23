@@ -64,7 +64,7 @@ class SubjectsViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         queryset = Subject.objects.all()
-        course_id = self.kwargs.get('course')
+        course_id = self.request.query_params.get('course')
         if course_id is not None:
             queryset = queryset.filter(course_id=course_id)
         return queryset
@@ -73,6 +73,17 @@ class SubjectsViewSet(viewsets.ReadOnlyModelViewSet):
 class ChapterViewSet(viewsets.ModelViewSet):
     serializer_class = ChapterSerializer
     queryset = Chapter.objects.all()
+
+
+class UnitViewSet(viewsets.ModelViewSet):
+    serializer_class = UnitSerializer
+    queryset = Unit.objects.all()
+
+    def get_queryset(self):
+        subject = self.request.query_params.get('subject')
+        if subject is not None:
+            self.queryset = self.queryset.filter(subject=subject)
+        return self.queryset
 
 
 class SyllabusViewSet(viewsets.ModelViewSet):
