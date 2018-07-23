@@ -19,6 +19,14 @@ class SubjectSerializer(serializers.ModelSerializer):
         exclude = ()
 
 
+class CourseDetailSerializer(serializers.ModelSerializer):
+    subjects = SubjectSerializer(many=True)
+
+    class Meta:
+        model = Course
+        exclude = ()
+
+
 # class SubjectUnitChaptersSerializer(serializers.ModelSerializer):
 #
 #     class Meta:
