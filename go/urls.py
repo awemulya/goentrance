@@ -19,10 +19,10 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 
 urlpatterns = [
+   path('', include('core.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('api/', include('core.api.urls')),
-    path('core/', include('core.urls')),
     path('entrance/', include('entrance.urls')),
     path('package/', include('package.urls')),
     path('spa', TemplateView.as_view(template_name='go/spa.html'), name='home'),
