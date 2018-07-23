@@ -14,7 +14,7 @@ class SuperAdminMixin(LoginRequiredMixin):
         if request.user.is_authenticated:
             if request.user.is_superuser:
                 return super(SuperAdminMixin, self).dispatch(request, *args, **kwargs)
-        raise PermissionDenied
+        return HttpResponseRedirect('/accounts/login')
 
 
 # Create your views here.
@@ -29,7 +29,7 @@ class CoresDashboardView(SuperAdminMixin, TemplateView):
             else:
                 return HttpResponseRedirect('/spa#/')
 
-        raise PermissionDenied
+        return HttpResponseRedirect('/accounts/login')
 
 
 class CourseListView(SuperAdminMixin, ListView):
