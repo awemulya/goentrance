@@ -1,8 +1,8 @@
   <template>
   <v-list>
-    <v-subheader>Subjects</v-subheader>
+    <v-subheader>Units</v-subheader>
 
-   <v-list-tile v-for="item in subjects" :key="item.title" :to="{path: '/unit/' + item.id}">
+   <v-list-tile v-for="item in units" :key="item.title" :to="{path: '#'}">
      <v-list-tile-action>
               <v-icon>Book</v-icon>
             </v-list-tile-action>
@@ -22,7 +22,7 @@ export default {
     // SubjectListElement
   },
   props: {
-    subjects: {
+    units: {
       type: Array
     }
   }

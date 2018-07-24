@@ -165,6 +165,9 @@ WEBPACK_LOADER = {
     }
 }
 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
 try:
     from .local_settings import *
 except Exception as e:

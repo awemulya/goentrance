@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HomeView from '@/views/Home'
 import SubjectView from '@/views/Subject'
+import UnitView from '@/views/Unit'
 
 Vue.use(Router)
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '/subject/:courseId',
       name: 'Subject',
       component: SubjectView
+    },
+    {
+      path: '/unit/:subjectId',
+      name: 'Unit',
+      component: UnitView
     }
   ]
 })
