@@ -6,6 +6,7 @@
       app
     >
       <v-list dense>
+      <router-link to="/" tag="span" style="cursor: pointer">
         <v-list-tile @click="link">
           <v-list-tile-action>
             <v-icon>home</v-icon>
@@ -14,6 +15,7 @@
             <v-list-tile-title>Home</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        </router-link>
         <v-list-tile @click="link">
           <v-list-tile-action>
             <v-icon>contact_mail</v-icon>
@@ -28,8 +30,9 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Entrance</v-toolbar-title>
       <v-spacer></v-spacer>
-    <v-btn icon>
+    <v-btn icon><router-link to="/" tag="span" style="cursor: pointer">
         <v-icon>search</v-icon>
+      </router-link>
       </v-btn>
       <v-btn icon>
         <v-icon>apps</v-icon>
@@ -42,6 +45,9 @@
       </v-btn>
     </v-toolbar>
     <v-content>
+    <v-btn color="orange darken-2" dark @click="goBack" tag="span" style="cursor: pointer">
+        <v-icon dark left>arrow_back</v-icon>Back
+        </v-btn>
       <v-container class="text-xs-center">
         <v-layout
           justify-center
@@ -64,7 +70,13 @@ export default {
     drawer: false,
     link: ''
   }),
-
+  methods: {
+    goBack () {
+      window.history.length > 1
+        ? this.$router.go(-1)
+        : this.$router.push('/')
+    }
+  },
   props: {
     source: String
   }
