@@ -11,8 +11,8 @@
         <div slot="header"  color="blue lighten-4" >{{item.name}}</div>
         <v-card v-for="chapter in item.unit_chapters" v-bind:key="chapter"  color="blue lighten-4">
             <v-icon color="black" medium>book</v-icon>
-          <v-btn :to="{path: ''}">
-          {{chapter}}
+          <v-btn :to="{path: '/question-sets/' + chapter.id}">
+          {{chapter.name}}
           </v-btn>
         </v-card>
       </v-expansion-panel-content>

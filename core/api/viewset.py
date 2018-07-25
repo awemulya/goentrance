@@ -95,6 +95,13 @@ class QuestionSetViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSetSerializer
     queryset = QuestionSet.objects.all()
 
+    def get_queryset(self):
+        chapter = self.request.query_params.get('chapter')
+        if chapter is not None:
+            self.queryset = self.queryset.filter(chapter=chapter)
+        return self.queryset
+
+
 
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer

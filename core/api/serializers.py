@@ -70,10 +70,11 @@ class QuickNotesSerializer(serializers.ModelSerializer):
 
 
 class QuestionSetSerializer(serializers.ModelSerializer):
+    type = serializers.CharField(source='get_type_display')
 
     class Meta:
         model = QuestionSet
-        exclude = ()
+        fields = ('id', 'type', 'name', 'chapter', 'time')
 
 
 class QuestionSerializer(serializers.ModelSerializer):

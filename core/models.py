@@ -35,7 +35,7 @@ class Unit(models.Model):
         return self.name
 
     def unit_chapters(self):
-        return self.chapters.values_list('name', flat=True)
+        return self.chapters.values('name', 'id')
 
 
 class Chapter(models.Model):
