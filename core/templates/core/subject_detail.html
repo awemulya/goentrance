@@ -11,6 +11,7 @@
 	{% for unit in units %}<br>
 	{{ unit }}
 	{% endfor %}
-	<a href="{% url 'core:unit_add' %}">Add New Unit</a>
+	<br><br>
+	<a href="{% url 'core:unit_add' object.id%}">Add New Unit</a>
 </body>
 </html>

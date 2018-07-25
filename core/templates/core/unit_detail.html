@@ -12,6 +12,6 @@
 	{{ chapter }}
 	{% endfor %}
 	<br><br>
-	<a href="{% url 'core:chapter_add' %}">Add New Chapter</a> 
+	<a href="{% url 'core:chapter_add' object.id%}">Add New Chapter</a> 
 </body>
 </html>

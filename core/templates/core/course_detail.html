@@ -14,6 +14,6 @@
 	{% for obj in object_list %}
 	{{forloop.counter}}. <a href="{% url 'core:subject_detail' obj.id %}">{{ obj.name }}</a>
 	{% endfor %}
-	<a href="{% url 'core:subject_add' %}">Add New Subject</a>
+	<a href="{% url 'core:subject_add' object.id %}">Add New Subject</a>
 </body>
 </html>

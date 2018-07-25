@@ -4,9 +4,12 @@ from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
+from django.shortcuts import reverse, get_object_or_404
 
 from .models import Course, Subject, Unit, Chapter
 from .forms import CourseCreateForm, SubjectCreateForm, UnitCreateForm, ChapterCreateForm
+from django.views import generic
+from django.contrib.auth.forms import UserCreationForm
 
 
 class SuperAdminMixin(LoginRequiredMixin):
@@ -90,6 +93,11 @@ class SubjectCreateView(SuperAdminMixin, CreateView):
 	template_name = 'core/subject_form.html'
 	success_url = reverse_lazy('core:subject_list')
 
+	def form_valid(self, form):
+		form.instance.course = get_object_or_404(Course, pk=self.kwargs['pk'])
+		form.save()
+		return super().form_valid(form)
+
 
 class SubjectUpdateView(SuperAdminMixin, UpdateView):
 	model = Subject
@@ -126,6 +134,11 @@ class UnitCreateView(SuperAdminMixin, CreateView):
 	template_name = 'core/unit_form.html'
 	success_url = reverse_lazy('core:unit_list')
 
+	def form_valid(self, form):
+		form.instance.subject = get_object_or_404(Subject, pk=self.kwargs['pk'])
+		form.save()
+		return super().form_valid(form)
+
 
 class UnitUpdateView(SuperAdminMixin, UpdateView):
 	model = Unit
@@ -157,6 +170,11 @@ class ChapterCreateView(SuperAdminMixin, CreateView):
 	template_name = 'core/chapter_form.html'
 	success_url = reverse_lazy('core:chapter_list')
 
+	def form_valid(self, form):
+		form.instance.unit = get_object_or_404(Unit, pk=self.kwargs['pk'])
+		form.save()
+		return super().form_valid(form)
+
 
 class ChapterUpdateView(SuperAdminMixin, UpdateView):
 	model = Chapter
@@ -180,3 +198,10 @@ class SubjectUnitView(SuperAdminMixin, TemplateView):
 		context['subject_unit'] = Unit.objects.filter(subject_id=self.kwargs['subject_pk'])
 		# context['chapters'] = Chapter.objects.filter(unit__subject_id=self.kwargs['subject_pk'])
 		return context
+
+
+
+class SignUp(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'core/signup.html'
