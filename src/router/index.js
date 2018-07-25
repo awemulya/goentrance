@@ -22,6 +22,11 @@ export default new Router({
       path: '/unit/:subjectId',
       name: 'Unit',
       component: UnitView
+    },
+    {
+      path: '/question/:chapterId',
+      name: 'Chapter',
+      component: UnitView
     }
   ]
 })

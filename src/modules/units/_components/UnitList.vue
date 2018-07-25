@@ -1,16 +1,24 @@
   <template>
-  <v-list>
-    <v-subheader>Units</v-subheader>
-
-   <v-list-tile v-for="item in units" :key="item.title" :to="{path: '#'}">
-     <v-list-tile-action>
-              <v-icon>Book</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{item.name}}</v-list-tile-title>
-            </v-list-tile-content>
-   </v-list-tile>
-  </v-list>
+  <div class="text-md-center">
+    <v-subheader class="text-xs-center mb-3">Units</v-subheader>
+    <v-flex class="text-xs-center">
+    <v-expansion-panel
+      v-model="panel"
+      expand
+      dark
+    >
+      <v-expansion-panel-content
+        v-for="item in units" v-bind:key="item.title">
+        <div slot="header"  color="blue lighten-4" >{{item.name}}</div>
+        <v-card v-for="chapter in item.unit_chapters" v-bind:key="chapter"  color="blue lighten-4">
+          <v-btn :to="{path: ''}">
+          {{chapter}}
+          </v-btn>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+    </v-flex>
+    </div>
   </template>
 
 <script>
@@ -24,9 +32,11 @@ export default {
   props: {
     units: {
       type: Array
-    }
+    },
+    panel: ''
   }
 }
+
 </script>
 
 <style scoped>

@@ -42,11 +42,10 @@
       </v-btn>
     </v-toolbar>
     <v-content>
-      <v-container fluid fill-height>
+      <v-container class="text-xs-center">
         <v-layout
           justify-center
-          align-left
-        >
+          align-left>
           <v-flex text-xs-center>
           <router-view></router-view>
           </v-flex>
