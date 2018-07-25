@@ -4,6 +4,7 @@ import HomeView from '@/views/Home'
 import SubjectView from '@/views/Subject'
 import UnitView from '@/views/Unit'
 import QuestionSetView from '@/views/QuestionSet'
+import QuestionView from '@/views/Question'
 
 
 Vue.use(Router)
@@ -29,6 +30,11 @@ export default new Router({
       path: '/question-sets/:chapterId',
       name: 'Chapter',
       component: QuestionSetView
+    },
+    {
+      path: '/questions/:questionSetId',
+      name: 'Question',
+      component: QuestionView
     }
   ]
 })

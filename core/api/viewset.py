@@ -102,10 +102,15 @@ class QuestionSetViewSet(viewsets.ModelViewSet):
         return self.queryset
 
 
-
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     queryset = Question.objects.all()
+
+    def get_queryset(self):
+        question_set = self.request.query_params.get('question_set')
+        if question_set is not None:
+            self.queryset = self.queryset.filter(question_set=question_set)
+        return self.queryset
 
 
 class QuickNotesViewSet(viewsets.ModelViewSet):

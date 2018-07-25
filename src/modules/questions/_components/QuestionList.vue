@@ -1,13 +1,13 @@
   <template>
   <v-list>
-    <v-subheader>Question Sets</v-subheader>
+    <v-subheader>Questions</v-subheader>
 
-   <v-list-tile v-for="set in question_sets" :key="set.name" :to="{path: '/questions/' + set.id}">
+   <v-list-tile v-for="question in questions" :key="question.id">
      <v-list-tile-action>
               <v-icon>Book</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{set.name}}, {{set.type}}</v-list-tile-title>
+              <v-list-tile-title> {{question.question}}</v-list-tile-title>
             </v-list-tile-content>
    </v-list-tile>
   </v-list>
@@ -16,11 +16,11 @@
 <script>
 
 export default {
-  name: 'QuestionSetList',
+  name: 'QuestionList',
   components: {
   },
   props: {
-    question_sets: {
+    questions: {
       type: Array
     }
   }
