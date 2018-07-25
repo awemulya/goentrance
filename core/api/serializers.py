@@ -38,7 +38,7 @@ class UnitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Unit
-        fields = ('id', 'name', 'subject', 'chapters',)
+        fields = ('id', 'name', 'subject', 'unit_chapters',)
 
 
 class ChapterSerializer(serializers.ModelSerializer):
