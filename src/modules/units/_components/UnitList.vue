@@ -5,7 +5,6 @@
     <v-expansion-panel
       v-model="panel"
       expand
-      dark
     >
       <v-expansion-panel-content
         v-for="item in units" v-bind:key="item.title">
@@ -37,7 +36,6 @@ export default {
     panel: ''
   }
 }
-
 </script>
 
 <style scoped>
