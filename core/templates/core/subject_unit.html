@@ -5,20 +5,20 @@
 </head>
 <body>
 	<div>
-		<h4>Subject</h4>
+		<h4>Subject <a href="{% url 'core:unit_add' subject.id %}">Add New Unit</a></h4>
 		{{subject.name}}
 	</div>
 	<div>
 		{% for unit in subject_unit %}
 
 		<h4>Unit {{ forloop.counter }}. {{ unit.name }}</h4>
-      <h5>Chapters</h5>
+      <h5>Chapters 	<a href="{% url 'core:chapter_add' unit.id %}">Add  Chapter</a></h5>
       {% for chapter in unit.chapters.all %}
         {{ forloop.counter }}. {{ chapter.name }}<br>
       {% endfor %}
     {% endfor %}
 		<br><br>
-		<a href="{% url 'core:unit_add' subject.id %}">Add New Unit</a>
+
 	</div>
 	<br><br>
 
