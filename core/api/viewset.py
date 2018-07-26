@@ -74,6 +74,12 @@ class ChapterViewSet(viewsets.ModelViewSet):
     serializer_class = ChapterSerializer
     queryset = Chapter.objects.all()
 
+    def get_queryset(self):
+        unit = self.request.query_params.get('unit')
+        if unit is not None:
+            self.queryset = self.queryset.filter(unit=unit)
+        return self.queryset
+
 
 class UnitViewSet(viewsets.ModelViewSet):
     serializer_class = UnitSerializer
