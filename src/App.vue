@@ -28,7 +28,7 @@
     </v-navigation-drawer>
     <v-toolbar dark color="primary" fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Entrance</v-toolbar-title>
+      <v-toolbar-title><router-link to="/">Entrance</router-link></v-toolbar-title>
       <v-spacer></v-spacer>
     <v-btn icon><router-link to="/" tag="span" style="cursor: pointer">
         <v-icon>search</v-icon>
