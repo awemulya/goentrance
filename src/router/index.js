@@ -6,7 +6,6 @@ import UnitView from '@/views/Unit'
 import QuestionSetView from '@/views/QuestionSet'
 import QuestionView from '@/views/Question'
 
-
 Vue.use(Router)
 
 export default new Router({

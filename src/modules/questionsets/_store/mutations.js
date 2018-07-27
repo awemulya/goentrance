@@ -1,5 +1,5 @@
-const QUESTION_SETS_UPDATED = (state, question_sets) => {
-  state.question_sets = question_sets
+const QUESTION_SETS_UPDATED = (state, questionSets) => {
+  state.question_sets = questionSets
 }
 
 export default {

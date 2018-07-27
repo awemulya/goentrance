@@ -1,9 +1,9 @@
 import Api from '@/api/Api'
 
 export default {
-  fetchQuestions (question_set) {
+  fetchQuestions (questionSet) {
     let params = {}
-    params['question_set'] = question_set
+    params['question_set'] = questionSet
     return Api().get('questions/', {
       params: params
     })

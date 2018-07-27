@@ -1,7 +1,7 @@
 import api from '../_api'
 
-const getQuestions = (context, question_set) => {
-  api.fetchQuestions(question_set)
+const getQuestions = (context, questionSet) => {
+  api.fetchQuestions(questionSet)
     .then((response) => {
       context.commit('QUESTION_UPDATED', response.data)
     })
