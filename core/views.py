@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.shortcuts import reverse, get_object_or_404
 
-from .models import Course, Subject, Unit, Chapter
+from .models import Course, Subject, Unit, Chapter, QuestionSet
 from .forms import CourseCreateForm, SubjectCreateForm, UnitCreateForm, ChapterCreateForm
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
@@ -200,6 +200,62 @@ class SubjectUnitView(SuperAdminMixin, TemplateView):
     context['subject_unit'] = Unit.objects.filter(subject_id=self.kwargs['subject_pk'])
     # context['chapters'] = Chapter.objects.filter(unit__subject_id=self.kwargs['subject_pk'])
     return context
+
+
+class QuestionSetsListView(SuperAdminMixin, ListView):
+    template_name = 'core/question_sets.html'
+    model = QuestionSet
+    context_object_name = 'question_sets'
+
+    def get_queryset(self):
+        return QuestionSet.objects.filter(chapter_id=self.kwargs['chapter_id'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(QuestionSetsListView, self).get_context_data(**kwargs)
+        context['chapter'] = get_object_or_404(Chapter, id=self.kwargs['chapter_id'])
+        return context
+
+
+class QuestionSetsFormView(SuperAdminMixin, CreateView):
+    template_name = 'core/question_sets_form.html'
+    model = QuestionSet
+    fields = ('type', 'name', 'time')
+
+    def form_valid(self, form):
+        form.instance.chapter = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
+        form.save()
+        return super(QuestionSetsFormView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('core:question_sets', args=(self.kwargs['chapter_id'],))
+
+
+class QuestionSetsUpdateView(SuperAdminMixin, UpdateView):
+    template_name = 'core/question_sets_form.html'
+    model = QuestionSet
+    fields = ('type', 'name', 'time')
+
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     context = super(QuestionSetsListView, self).get_context_data(**kwargs)
+    #     context['chapter'] = get_object_or_404(Chapter, id=self.kwargs['chapter_id'])
+    #     return context
+
+    def form_valid(self, form):
+        form.instance.chapter = get_object_or_404(Chapter, pk=self.object.chapter.id)
+        form.save()
+        return super(QuestionSetsUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('core:question_sets', args=(self.object.chapter.id,))
+
+
+class QuestionSetsDeleteView(SuperAdminMixin, DeleteView):
+    template_name = 'core/question_sets_delete.html'
+    model = QuestionSet
+    context_object_name = 'question_sets'
+
+    def get_success_url(self):
+        return reverse_lazy('core:question_sets', args=(self.object.chapter.id,))
 
 
 class SignUp(generic.CreateView):

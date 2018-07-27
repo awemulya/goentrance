@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h3>Question Sets of {{ chapter }} </h3>
+<h5><a href="{% url 'core:question_sets_add'  chapter.pk %}">Add Question Sets</a></h5>
+{% for set in question_sets %}
+ {{ forloop.counter }}. {{ set.name }} <a href="{% url 'core:question_sets_update' set.pk %}">Edit</a> <a href="{% url 'core:question_sets_delete' set.pk %}">Delete</a>
+  {% empty %}
+  <p>
+    No Question Sets available
+  </p>
+{% endfor %}
+</body>
+</html>

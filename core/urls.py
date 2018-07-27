@@ -35,5 +35,10 @@ urlpatterns = [
     path('chapter-edit/<int:pk>/', ChapterUpdateView.as_view(), name='chapter_edit'),
     path('chapter-delete/<int:pk>/', ChapterDeleteView.as_view(), name='chapter_delete'),
     path('subject-unit/<int:subject_pk>', SubjectUnitView.as_view(), name='subject_unit'),
+    path('question-sets-add/<int:chapter_id>', views.QuestionSetsFormView.as_view(), name='question_sets_add'),
+    path('question-sets/<int:chapter_id>', views.QuestionSetsListView.as_view(), name='question_sets'),
+    path('question-sets-update/<int:pk>', views.QuestionSetsUpdateView.as_view(), name='question_sets_update'),
+    path('question-sets-delete/<int:pk>', views.QuestionSetsDeleteView.as_view(), name='question_sets_delete'),
+
     path('signup/', views.SignUp.as_view(), name='signup'),
 ]
