@@ -5,7 +5,7 @@
 </head>
 <body>
 <h3>Subject{% if object %}Edit{% else %}Add{% endif %}</h3>
-<form action="" method="POST" enctype="multipart/form-data" novalidate> {% csrf_token %}
+<form action="" method="POST"> {% csrf_token %}
 	{{ form.as_p }}
 	<button type="submit">Submit</button>
 </form>

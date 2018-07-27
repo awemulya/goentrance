@@ -41,13 +41,13 @@ class CourseListView(SuperAdminMixin, ListView):
 
 
 class CourseDetailView(SuperAdminMixin, DetailView):
-  model = Course
-  template_name = 'core/course_detail.html'
+    model = Course
+    template_name = 'core/course_detail.html'
 
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    context['subjects'] = Subject.objects.filter(course_id=self.kwargs['pk'])
-    return context
+    def get_context_data(self, **kwargs):
+        context = super(CourseDetailView, self).get_context_data(**kwargs)
+        context['subjects'] = Subject.objects.filter(course_id=self.kwargs['pk'])
+        return context
 
 
 class CourseCreateView(SuperAdminMixin, CreateView):
@@ -72,31 +72,36 @@ class CourseDeleteView(SuperAdminMixin, DeleteView):
 
 
 class SubjectListView(SuperAdminMixin, ListView):
-  model = Subject
-  template_name = 'core/subject_list.html'
+    model = Subject
+    template_name = 'core/subject_list.html'
+    context_object_name = 'subjects'
+
+    def get_queryset(self):
+        return Subject.objects.filter(course_id=self.kwargs['course_id'])
 
 
 class SubjectDetailView(SuperAdminMixin, DetailView):
-  model = Subject
-  template_name = 'core/subject_detail.html'
+    model = Subject
+    template_name = 'core/subject_detail.html'
 
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    context['units'] = Unit.objects.filter(subject_id=self.kwargs['pk'])
-    return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['units'] = Unit.objects.filter(subject_id=self.kwargs['pk'])
+        return context
 
 
 class SubjectCreateView(SuperAdminMixin, CreateView):
-  model = Subject
-  # fields = ('name', 'course',)
-  form_class = SubjectCreateForm
-  template_name = 'core/subject_form.html'
-  success_url = reverse_lazy('core:subject_list')
+    model = Subject
+    form_class = SubjectCreateForm
+    template_name = 'core/subject_form.html'
 
-  def form_valid(self, form):
-    form.instance.course = get_object_or_404(Course, pk=self.kwargs['pk'])
-    form.save()
-    return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.course = get_object_or_404(Course, pk=self.kwargs['course_id'])
+        form.save()
+        return super(SubjectCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('core:course_detail', args=(self.kwargs['course_id'],))
 
 
 class SubjectUpdateView(SuperAdminMixin, UpdateView):
