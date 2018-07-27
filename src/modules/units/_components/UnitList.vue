@@ -25,6 +25,10 @@
 // import SubjectListElement from './SubjectListElement'
 
 export default {
+  data: () => ({
+    panel: [],
+    link: ''
+  }),
   name: 'SubjectList',
   components: {
     // SubjectListElement
@@ -32,8 +36,7 @@ export default {
   props: {
     units: {
       type: Array
-    },
-    panel: ''
+    }
   }
 }
 </script>
