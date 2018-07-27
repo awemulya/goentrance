@@ -74,6 +74,12 @@ class ChapterViewSet(viewsets.ModelViewSet):
     serializer_class = ChapterSerializer
     queryset = Chapter.objects.all()
 
+    def get_queryset(self):
+        unit = self.request.query_params.get('unit')
+        if unit is not None:
+            self.queryset = self.queryset.filter(unit=unit)
+        return self.queryset
+
 
 class UnitViewSet(viewsets.ModelViewSet):
     serializer_class = UnitSerializer
@@ -95,10 +101,22 @@ class QuestionSetViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSetSerializer
     queryset = QuestionSet.objects.all()
 
+    def get_queryset(self):
+        chapter = self.request.query_params.get('chapter')
+        if chapter is not None:
+            self.queryset = self.queryset.filter(chapter=chapter)
+        return self.queryset
+
 
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     queryset = Question.objects.all()
+
+    def get_queryset(self):
+        question_set = self.request.query_params.get('question_set')
+        if question_set is not None:
+            self.queryset = self.queryset.filter(question_set=question_set)
+        return self.queryset
 
 
 class QuickNotesViewSet(viewsets.ModelViewSet):

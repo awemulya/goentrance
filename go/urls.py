@@ -29,10 +29,10 @@ urlpatterns = [
     path('spa', login_required(TemplateView.as_view(template_name='go/spa.html')), name='home'),
 
 ]
-#
-# if settings.DEBUG:
-#     import debug_toolbar
-#     urlpatterns = [
-#         path('__debug__/', include(debug_toolbar.urls)),
-#     ] + urlpatterns
-#
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
+

@@ -19,9 +19,9 @@ urlpatterns = [
     path('course-add/', CourseCreateView.as_view(), name='course_add'),
     path('course-edit/<int:pk>/', CourseUpdateView.as_view(), name='course_edit'),
     path('course-delete/<int:pk>/', CourseDeleteView.as_view(), name='course_delete'),
-	path('subject-list', SubjectListView.as_view(), name='subject_list'),
+	  path('subject-list', SubjectListView.as_view(), name='subject_list'),
     path('subject-detail/<int:pk>/', SubjectDetailView.as_view(), name='subject_detail'),
-    path('subject-add/<int:pk>/', SubjectCreateView.as_view(), name='subject_add'),
+    path('subject-add/<int:course_id>/', SubjectCreateView.as_view(), name='subject_add'),
     path('subject-edit/<int:pk>/', SubjectUpdateView.as_view(), name='subject_edit'),
     path('subject-delete/<int:pk>/', SubjectDeleteView.as_view(), name='subject_delete'),
     path('unit-list', UnitListView.as_view(), name='unit_list'),
@@ -35,5 +35,10 @@ urlpatterns = [
     path('chapter-edit/<int:pk>/', ChapterUpdateView.as_view(), name='chapter_edit'),
     path('chapter-delete/<int:pk>/', ChapterDeleteView.as_view(), name='chapter_delete'),
     path('subject-unit/<int:subject_pk>', SubjectUnitView.as_view(), name='subject_unit'),
+    path('question-sets-add/<int:chapter_id>', views.QuestionSetsFormView.as_view(), name='question_sets_add'),
+    path('question-sets/<int:chapter_id>', views.QuestionSetsListView.as_view(), name='question_sets'),
+    path('question-sets-update/<int:pk>', views.QuestionSetsUpdateView.as_view(), name='question_sets_update'),
+    path('question-sets-delete/<int:pk>', views.QuestionSetsDeleteView.as_view(), name='question_sets_delete'),
+
     path('signup/', views.SignUp.as_view(), name='signup'),
 ]
