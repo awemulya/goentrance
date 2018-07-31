@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.shortcuts import reverse, get_object_or_404
 
-from .models import Course, Subject, Unit, Chapter, QuestionSet
+from .models import Course, Subject, Unit, Chapter, QuestionSet, Question
 from .forms import CourseCreateForm, SubjectCreateForm, UnitCreateForm, ChapterCreateForm
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
@@ -261,6 +261,31 @@ class QuestionSetsDeleteView(SuperAdminMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('core:question_sets', args=(self.object.chapter.id,))
+
+
+class QuestionSetsDashboard(DetailView):
+  model = QuestionSet
+  context_object_name = 'obj'
+
+def get_context_data(self, **kwargs):
+    context = super(QuestionSetsDashboard, self).get_context_data(**kwargs)
+    question_set = context.get('obj')
+    questions = question_set.questions.all()
+    context['questions'] = questions
+    return context
+
+class QuestionAddView(SuperAdminMixin, CreateView):
+    template_name = 'core/question_form.html'
+    model = Question
+    fields = ('question',)
+
+    def form_valid(self, form):
+        form.instance.question_set = get_object_or_404(QuestionSet, pk=self.kwargs['pk'])
+        form.save()
+        return super(QuestionAddView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('core:question_set_dashboard', args=(self.kwargs['pk'],))
 
 
 class SignUp(generic.CreateView):

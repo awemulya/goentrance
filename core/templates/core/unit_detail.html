@@ -9,9 +9,9 @@
 	<br><br>
 	<h4>Chapters</a></h4>
 	{% for chapter in chapters %}<br>
-	{{ chapter }}
+  <a href="{% url 'core:question_sets' chapter.pk %}">{{ forloop.counter }}. {{ chapter.name }}</a>
 	{% endfor %}
 	<br><br>
-	<a href="{% url 'core:chapter_add' object.id%}">Add New Chapter</a> 
+	<a href="{% url 'core:chapter_add' object.id%}">Add New Chapter</a>
 </body>
 </html>
