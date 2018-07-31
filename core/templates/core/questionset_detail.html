@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Question Set | {{obj.name}}</title>
+</head>
+<body>
+	{{obj.name}}
+<div class="questions">
+  <h3>
+    `<a href="{% url 'core:question_add' obj.pk %}">Add Question</a>
+</h3>
+  {% for q in questions %}
+   {{ forloop.counter }}.
+
+  <a href="question-detail">{{ q.question }}</a>
+    {% empty %}
+    <p>
+      No Question  available
+    </p>
+  {% endfor %}
+</div>
+</body>
+</html>
