@@ -267,12 +267,13 @@ class QuestionSetsDashboard(DetailView):
   model = QuestionSet
   context_object_name = 'obj'
 
-def get_context_data(self, **kwargs):
-    context = super(QuestionSetsDashboard, self).get_context_data(**kwargs)
-    question_set = context.get('obj')
-    questions = question_set.questions.all()
-    context['questions'] = questions
-    return context
+
+  def get_context_data(self, **kwargs):
+      context = super(QuestionSetsDashboard, self).get_context_data(**kwargs)
+      question_set = context.get('obj')
+      questions = question_set.questions.all()
+      context['questions'] = questions
+      return context
 
 class QuestionAddView(SuperAdminMixin, CreateView):
     template_name = 'core/question_form.html'

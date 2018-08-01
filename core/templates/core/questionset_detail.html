@@ -7,17 +7,40 @@
 	{{obj.name}}
 <div class="questions">
   <h3>
-    `<a href="{% url 'core:question_add' obj.pk %}">Add Question</a>
+    <a href="{% url 'core:question_add' obj.pk %}">Add Question</a>
 </h3>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Question</th>
+      <th scope="col">Option1</th>
+      <th scope="col">Option2</th>
+      <th scope="col">Option3</th>
+      <th scope="col">Option4</th>
+    </tr>
+  </thead>
+  <tbody>
   {% for q in questions %}
-   {{ forloop.counter }}.
-
-  <a href="question-detail">{{ q.question }}</a>
-    {% empty %}
-    <p>
+    <tr>
+      <th scope="row">{{ forloop.counter }}.</th>
+      <td><a href="question-detail">{{ q.question }}</a></td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>@mdo</td>
+      <td>@mdo</td>
+    </tr>
+   {% empty %}
+    <tr>
+      <td>
       No Question  available
-    </p>
+      </td>
+    </tr>
   {% endfor %}
+
+  </tbody>
+</table>
+
 </div>
 </body>
 </html>
