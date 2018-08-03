@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question</title>
+</head>
+<body>
+Q: {{object}}
+<br>
+<table class="table">
+  {% if options %}
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Option</th>
+      <th scope="col">Correct</th>
+      <th scope="col"> <a href="{% url 'core:option_add' object.pk %}">Add Option</a></th>
+    </tr>
+  </thead>
+  <tbody>
+   {% for o in options %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{o.answer}}</td>
+      <td>{{o.correct}}</td>
+      <td> <a href="{% url 'core:option_detail' o.pk %}">Modify</a></td>
+    </tr>
+   {% endfor %}
+   {% else %}
+    <tr>
+      <td>
+      No Options  available  <a href="{% url 'core:option_add' object.pk %}">Add Option</a>
+      </td>
+    </tr>
+  {% endif %}
+
+  </tbody>
+</table>
+
+</body>
+</html>

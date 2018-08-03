@@ -46,6 +46,10 @@ urlpatterns = [
 
     path('question-set-dashboard/<int:pk>', views.QuestionSetsDashboard.as_view(), name='question_set_dashboard'),
     path('question-add/<int:pk>', views.QuestionAddView.as_view(), name='question_add'),
+    path('question-dashboard/<int:pk>', views.QuestionDashboardView.as_view(), name='question_dashboard'),
+
+    path('option-detail/<int:pk>', views.OptionDetailView.as_view(), name='option_detail'),
+    path('option-add/<int:pk>', views.OptionAddView.as_view(), name='option_add'),
 
     path('signup/', views.SignUp.as_view(), name='signup'),
 ]

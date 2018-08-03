@@ -24,11 +24,10 @@
   {% for q in questions %}
     <tr>
       <th scope="row">{{ forloop.counter }}.</th>
-      <td><a href="question-detail">{{ q.question }}</a></td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
+      <td><a href="{% url 'core:question_dashboard' q.pk %}">{{ q.question }}</a></td>
+      {% for o in  q.options.all %}
+      <td><a href="{% url 'core:option_detail' o.pk %}">{{ o }}</a></td>
+      {% endfor %}
     </tr>
    {% empty %}
     <tr>

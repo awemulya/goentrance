@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.shortcuts import reverse, get_object_or_404
 
-from .models import Course, Subject, Unit, Chapter, QuestionSet, Question
+from .models import Course, Subject, Unit, Chapter, QuestionSet, Question, Options
 from .forms import CourseCreateForm, SubjectCreateForm, UnitCreateForm, ChapterCreateForm
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
@@ -287,6 +287,37 @@ class QuestionAddView(SuperAdminMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('core:question_set_dashboard', args=(self.kwargs['pk'],))
+
+class QuestionDashboardView(SuperAdminMixin, DetailView):
+    template_name = "core/question_dashboard.html"
+    model = Question
+
+    def get_context_data(self, **kwargs):
+        data = super(QuestionDashboardView, self).get_context_data(**kwargs)
+        data['options'] = Options.objects.filter(question__id=self.kwargs['pk'])
+        return data
+
+
+class OptionDetailView(SuperAdminMixin, UpdateView):
+    model = Options
+    fields = ('answer', 'correct')
+
+    def get_success_url(self):
+        option = Options.objects.get(pk=self.kwargs['pk'])
+        return reverse_lazy('core:question_dashboard', args=(option.question.id,))
+
+
+class OptionAddView(SuperAdminMixin, CreateView):
+    model = Options
+    fields = ('answer', 'correct')
+
+    def form_valid(self, form):
+        form.instance.question = get_object_or_404(Question, pk=self.kwargs['pk'])
+        form.save()
+        return super(OptionAddView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('core:question_dashboard', args=(self.kwargs['pk'],))
 
 
 class SignUp(generic.CreateView):
