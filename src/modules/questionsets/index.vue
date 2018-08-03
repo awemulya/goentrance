@@ -14,10 +14,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      question_sets: '$_question_sets/question_sets'
+      question_sets: '$_question_sets/questionSets'
     }),
     chapter () {
-      // We will see what `params` is shortly
       return this.$route.params.chapterId
     }
   },

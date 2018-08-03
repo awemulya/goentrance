@@ -71,10 +71,11 @@ class QuickNotesSerializer(serializers.ModelSerializer):
 
 class QuestionSetSerializer(serializers.ModelSerializer):
     type = serializers.CharField(source='get_type_display')
+    questions_count = serializers.ReadOnlyField()
 
     class Meta:
         model = QuestionSet
-        fields = ('id', 'type', 'name', 'chapter', 'time')
+        fields = ('id', 'type', 'name', 'chapter', 'time', 'questions_count')
 
 
 class QuestionSerializer(serializers.ModelSerializer):

@@ -98,6 +98,10 @@ class QuestionSet(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def questions_count(self):
+          return self.questions.count()
+
 
 class Question(models.Model):
     question_set = models.ForeignKey(QuestionSet, related_name="questions", on_delete=models.CASCADE)

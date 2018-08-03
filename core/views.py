@@ -267,13 +267,13 @@ class QuestionSetsDashboard(DetailView):
   model = QuestionSet
   context_object_name = 'obj'
 
-
   def get_context_data(self, **kwargs):
       context = super(QuestionSetsDashboard, self).get_context_data(**kwargs)
       question_set = context.get('obj')
       questions = question_set.questions.all()
       context['questions'] = questions
       return context
+
 
 class QuestionAddView(SuperAdminMixin, CreateView):
     template_name = 'core/question_form.html'
@@ -287,6 +287,7 @@ class QuestionAddView(SuperAdminMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('core:question_set_dashboard', args=(self.kwargs['pk'],))
+
 
 class QuestionDashboardView(SuperAdminMixin, DetailView):
     template_name = "core/question_dashboard.html"
