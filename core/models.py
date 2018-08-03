@@ -119,4 +119,4 @@ class Options(models.Model):
         ordering = ['question']
 
     def __str__(self):
-        return self.question
+        return self.question.question
