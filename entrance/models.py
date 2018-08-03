@@ -8,6 +8,7 @@ class Entrance(models.Model):
     user = models.ForeignKey(User, related_name="entrances", on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     time_seconds = models.IntegerField(default=0)
+    # question set
 
     class Meta:
         ordering = ['user']
