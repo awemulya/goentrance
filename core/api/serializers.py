@@ -78,17 +78,18 @@ class QuestionSetSerializer(serializers.ModelSerializer):
         fields = ('id', 'type', 'name', 'chapter', 'time', 'questions_count')
 
 
-class QuestionSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Question
-        exclude = ()
-
-
 class OptionsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Options
+        exclude = ('question', 'correct')
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    options = OptionsSerializer(many=True)
+
+    class Meta:
+        model = Question
         exclude = ()
 
 

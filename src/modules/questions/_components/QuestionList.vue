@@ -33,54 +33,25 @@
         <v-container fluid>
           <v-layout row wrap>
             <v-flex xs12>
-              <v-radio-group v-model="color" row>
+              <v-card>
+              <v-card-text>
+              {{question.question}}
+            </v-card-text>
+              </v-card>
+            </v-flex>
+              <v-flex xs12>
+              <v-radio-group v-model="color" column>
                 <v-radio
-                  v-for="(colorValue, i) in ['success', 'info', 'error', 'cyan darken-2']"
-                  :color="colorValue"
-                  :key="i"
-                  :label="colorValue"
-                  :value="colorValue"
+                  v-for="option in question.options"
+                  :key="option.id"
+                  :label="option.answer"
+                  :value="option.id"
+                  @click="selected(option.id)"
                 ></v-radio>
               </v-radio-group>
             </v-flex>
-            <v-flex xs12 sm3>
-              <v-checkbox
-                v-model="mode"
-                label="Multi-line (mobile)"
-                value="multi-line"
-              ></v-checkbox>
-            </v-flex>
-            <v-flex xs12 sm3>
-              <v-checkbox
-                v-model="mode"
-                label="Vertical (mobile)"
-                value="vertical"
-              ></v-checkbox>
-            </v-flex>
-            <v-flex xs12 sm4 offset-sm4>
-              <v-text-field
-                v-model="text"
-                label="Text"
-                type="text"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm4>
-              <v-text-field
-                v-model.number="timeout"
-                label="Timeout"
-                type="number"
-              ></v-text-field>
-            </v-flex>
           </v-layout>
         </v-container>
-        <v-btn
-          block
-          color="primary"
-          dark
-          @click="snackbar = true"
-        >
-          Show Snackbar
-        </v-btn>
       </v-card-text>
       <v-snackbar
         v-model="snackbar"
@@ -111,10 +82,12 @@ export default {
     start: false,
     show: false,
     snackbar: false,
-    color: '',
+    color: 'success',
     mode: '',
-    timeout: 6000,
-    text: 'Hello, I\'m a snackbar'
+    timeout: 1000,
+    text: 'Answer Submitted',
+    question: '',
+    question_no: 0
   }),
   components: {
   },
@@ -123,9 +96,25 @@ export default {
       type: Array
     }
   },
+  methods: {
+    selected: function (value) {
+      console.log(value)
+      // Submit answer to question
+      this.snackbar = true
+      this.question_no += 1
+      if (this.questions.length > this.question_no) {
+        this.question = this.questions[this.question_no]
+      } else {
+        console.log('exam completed')
+      }
+    }
+  },
   watch: {
     // whenever start changes, this function will run
     start: function (newValue, oldValue) {
+      this.question = this.questions[this.question_no]
+    },
+    snackbar: function (newValue, oldValue) {
       console.log(newValue)
     }
   }
