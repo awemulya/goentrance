@@ -3,7 +3,7 @@
       <v-flex  xs12 sm6 offset-sm3>
         <v-card v-show="!start && !end">
           <v-card-media
-            src="https://cdn.vuetifyjs.com/images/cards/road.jpg"
+            v-bind:src="background"
             height="300px"
           >
           </v-card-media>
@@ -131,6 +131,11 @@ export default {
   props: {
     questions: {
       type: Array
+    }
+  },
+  computed: {
+    background () {
+      return require('@/assets/yatra.jpg')
     }
   },
   methods: {
