@@ -1,5 +1,15 @@
 {% extends "_base.html" %}
 
+{% block nav %}
+	<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="{% url 'core:course_list' %}">Courses</a></li>
+				<li class="breadcrumb-item"><a href="{% url 'core:course_detail' unit.subject.course.id %}">{{unit.subject.course}}</a></li>
+				<li class="breadcrumb-item"><a href="{% url 'core:subject_detail' unit.subject.id %}">{{unit.subject}}</a></li>
+				<li class="breadcrumb-item active" aria-current="page">{{unit}}</li>
+			</ol>
+		</nav>
+{% endblock nav %}
 {% block content %}
 
 		<h4>Units</a></h4>

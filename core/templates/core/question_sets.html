@@ -1,5 +1,14 @@
 {% extends "_base.html" %}
-
+{% block nav %}
+	<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'core:course_list' %}">Courses</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'core:subject_detail' chapter.unit.subject.id %}">{{chapter.unit.subject}}</a></li>
+				<li class="breadcrumb-item"><a href="{% url 'core:unit_detail' chapter.unit.id %}">{{chapter.unit}}</a></li>
+				<li class="breadcrumb-item active" aria-current="page">{{chapter}}</li>
+			</ol>
+		</nav>
+{% endblock nav %}
 {% block content %}
 
 <h3>Question Sets of {{ chapter }} </h3>
