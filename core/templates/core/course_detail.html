@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Course Detail</title>
-</head>
-<body>
+{% extends "_base.html" %}
+{% block content %}
+
 	<h4>Courses</h4>
 	{{ course.name }}
 	<br><br>
@@ -14,5 +11,4 @@
 	{% endfor %}<br><br>
 
 	<a href="{% url 'core:subject_add' course.id %}">Add New Subject</a>
-</body>
-</html>
+{% endblock content %}

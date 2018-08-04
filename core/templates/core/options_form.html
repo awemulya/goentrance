@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Add /Update Option In question name </title>
-</head>
-<body>
+{% extends "_base.html" %}
+
+{% block content %}
+
 <h3>Option{% if object %}Edit{% else %}Add{% endif %}</h3>
 <form action="" method="POST" enctype="multipart/form-data" novalidate> {% csrf_token %}
 	{{ form.as_p }}
 	<button type="submit">Submit</button>
 </form>
-</body>
-</html>
+{% endblock content %}

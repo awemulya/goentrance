@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Unit Detail</title>
-</head>
-<body>
-	<h4>Units</a></h4>
-	{{ unit.name }}
-	<br><br>
-	<h4>Chapters</a></h4>
-	{% for chapter in chapters %}<br>
-  <a href="{% url 'core:question_sets' chapter.pk %}">{{ forloop.counter }}. {{ chapter.name }}</a>
-  <a href="{% url 'core:chapter_edit' chapter.pk %}">Edit</a>  <a href="{% url 'core:chapter_delete' chapter.pk %}">Delete</a>
-	{% endfor %}
-	<br><br>
-	<a href="{% url 'core:chapter_add' object.id%}">Add New Chapter</a>
-</body>
-</html>
+{% extends "_base.html" %}
+
+{% block content %}
+
+		<h4>Units</a></h4>
+		{{ unit.name }}
+		<br><br>
+		<h4>Chapters</a></h4>
+		{% for chapter in chapters %}<br>
+		<a href="{% url 'core:question_sets' chapter.pk %}">{{ forloop.counter }}. {{ chapter.name }}</a>
+		<a href="{% url 'core:chapter_edit' chapter.pk %}">Edit</a>  <a href="{% url 'core:chapter_delete' chapter.pk %}">Delete</a>
+		{% endfor %}
+		<br><br>
+		<a href="{% url 'core:chapter_add' object.id%}">Add New Chapter</a>
+{% endblock content %}
