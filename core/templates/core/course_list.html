@@ -4,14 +4,14 @@
 	<title>COURSE LIST</title>
 </head>
 <body>
-<h4>Course List</a></h4>
-{% for obj in object_list %}
-	{{forloop.counter}}. <a href="{% url 'core:course_detail' obj.id %}">{{ obj.name }}</a>
-	&nbsp;&nbsp;&nbsp;<a href="{% url 'core:course_edit' obj.id %}">Edit</a>
-	&nbsp;&nbsp;&nbsp;<a href="{% url 'core:course_delete' obj.id %}">Delete</a>
-	<br>
+<h4>Course List</h4>
+{% for course in courses %}
+	{{forloop.counter}}. <a href="{% url 'core:course_detail' course.id %}">{{ course.name }}</a>
+	&nbsp;&nbsp;&nbsp;<a href="{% url 'core:course_edit' course.id %}">Edit</a>
+	&nbsp;&nbsp;&nbsp;<a href="{% url 'core:course_delete' course.id %}">Delete</a><br>
+  {% empty %}
+   <p>No Course Found.</p>
 {% endfor %}
-<br><br><br>
-<a href="{% url 'core:course_add' %}">Add New Course</a>
+<p><a href="{% url 'core:course_add' %}">Add New Course</a></p>
 </body>
 </html>

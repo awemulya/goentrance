@@ -9,9 +9,9 @@
 	<br><br>
 	<h4>Units</a></h4>
 	{% for unit in units %}<br>
-	{{ unit }}
+  <a href="{% url 'core:unit_detail' unit.id %}">{{ unit }}</a> <a href="{% url 'core:unit_edit' unit.id %}">Edit</a>  <a href="{% url 'core:unit_delete' unit.id%}">Delete</a><br>
 	{% endfor %}
 	<br><br>
-	<a href="{% url 'core:unit_add' object.id%}">Add New Unit</a>
+	<a href="{% url 'core:unit_add' object.id %}">Add New Unit</a>
 </body>
 </html>
