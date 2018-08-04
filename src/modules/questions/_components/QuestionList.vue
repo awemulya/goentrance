@@ -17,6 +17,12 @@
             <v-btn flat @click="start =true" v-if="start==false">
             Start
             </v-btn>
+             <button type="button" class="btn btn-secondary" :disabled="counting" @click="countdown">
+    <countdown v-if="counting" :time="60000" :leading-zero="false" @countdownend="countdownend">
+      <template slot-scope="props">Fetch again {{ props.totalSeconds }} seconds later</template>
+    </countdown>
+    <span v-else>Fetch Verification Code</span>
+  </button>
             <v-spacer></v-spacer>
             <v-btn icon @click="show = !show">
               <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
@@ -104,6 +110,9 @@
   </template>
 
 <script>
+import VueCountdown from '@xkeshi/vue-countdown'
+var now = new Date()
+var newYear = new Date(now.getFullYear() + 1, 0, 1)
 
 export default {
   name: 'QuestionList',
@@ -118,6 +127,8 @@ export default {
     text: 'Answer Submitted',
     question: '',
     question_no: 0,
+    counting: false,
+    time: newYear - now,
     items: [
       { action: '15 min', headline: 'Brunch this weekend?', title: 'Ali Connors', subtitle: "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?" },
       { action: '2 hr', headline: 'Summer BBQ', title: 'me, Scrott, Jennifer', subtitle: "Wish I could come, but I'm out of town this weekend." },
@@ -127,6 +138,7 @@ export default {
     ]
   }),
   components: {
+    'countdown': VueCountdown
   },
   props: {
     questions: {
@@ -150,6 +162,12 @@ export default {
         console.log('exam completed')
         this.end = true
       }
+    },
+    countdown: function () {
+      this.counting = true
+    },
+    countdownend: function () {
+      this.counting = false
     }
   },
   watch: {
