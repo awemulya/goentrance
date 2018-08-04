@@ -1,7 +1,7 @@
   <template>
   <v-layout row>
       <v-flex  xs12 sm6 offset-sm3>
-        <v-card v-show="!start">
+        <v-card v-show="!start && !end">
           <v-card-media
             src="https://cdn.vuetifyjs.com/images/cards/road.jpg"
             height="300px"
@@ -28,7 +28,7 @@
             </v-card-text>
           </v-slide-y-transition>
         </v-card>
-        <v-card v-show="start">
+        <v-card v-show="start && !end">
           <v-card-text>
         <v-container fluid>
           <v-layout row wrap>
@@ -70,6 +70,9 @@
         </v-btn>
       </v-snackbar>
         </v-card>
+        <v-card v-show="end">
+          Results
+        </v-card>
       </v-flex>
     </v-layout>
   </template>
@@ -80,6 +83,7 @@ export default {
   name: 'QuestionList',
   data: () => ({
     start: false,
+    end: false,
     show: false,
     snackbar: false,
     color: 'success',
@@ -106,6 +110,7 @@ export default {
         this.question = this.questions[this.question_no]
       } else {
         console.log('exam completed')
+        this.end = true
       }
     }
   },
