@@ -4,7 +4,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Shards Dashboard Lite - Free Bootstrap Admin Template – DesignRevision</title>
+    {% block title %}
+        <title>Goentrance Dashboard</title>
+    {% endblock title %}
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -13,6 +15,10 @@
     <link rel="stylesheet" id="main-stylesheet" data-version="1.0.0" href="{% static 'styles/shards-dashboards.1.0.0.min.css' %}">
     <link rel="stylesheet" href="{% static 'styles/extras.1.0.0.min.css' %}">
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    {% block extra_style %}
+    
+    {% endblock extra_style %}
   </head>
   <body class="h-100">
     <div class="color-switcher animated">
@@ -89,6 +95,7 @@
               </div>
               <input class="navbar-search form-control" type="text" placeholder="Search for something..." aria-label="Search"> </div>
           </form>
+        
           <div class="nav-wrapper">
             <ul class="nav flex-column">
         
@@ -188,6 +195,9 @@
                 </a>
               </nav>
             </nav>
+                {% block nav %}
+                
+                {% endblock nav %}
           </div>
           <!-- / .main-navbar -->
           <div class="main-content-container container-fluid px-4">
@@ -220,5 +230,9 @@
     <script src="{% static 'scripts/extras.1.0.0.min.js' %}"></script>
     <script src="{% static 'scripts/shards-dashboards.1.0.0.min.js' %}"></script>
     <script src="{% static 'scripts/app/app-blog-overview.1.0.0.js' %}"></script>
+
+    {% block extra_scripts %}
+    
+    {% endblock extra_scripts %}
   </body>
 </html>
