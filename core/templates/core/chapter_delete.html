@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>DELETE COURSE</title>
-</head>
-<body>
+{% extends "_base.html" %}
+
+{% block content %}
+
 <form method="POST" action="{% url 'core:chapter_delete' object.id %}">{% csrf_token %}
 Click Yes to delete {{ object.name }}
 <button type="submit">YES</button>
 </form>
-</body>
-</html>
+{% endblock content %}

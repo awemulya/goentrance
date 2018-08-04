@@ -5,11 +5,12 @@ from django.views.generic import ListView, DetailView, CreateView, DeleteView, U
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.shortcuts import reverse, get_object_or_404
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 from .models import Course, Subject, Unit, Chapter, QuestionSet, Question, Options
 from .forms import CourseCreateForm, SubjectCreateForm, UnitCreateForm, ChapterCreateForm
 from django.views import generic
-from django.contrib.auth.forms import UserCreationForm
 
 
 class SuperAdminMixin(LoginRequiredMixin):
@@ -33,6 +34,13 @@ class CoresDashboardView(SuperAdminMixin, TemplateView):
             return HttpResponseRedirect('/spa#/')
 
         return HttpResponseRedirect('/accounts/login')
+    
+    def get_context_data(self, **kwargs):
+        context = super(CoresDashboardView, self).get_context_data(**kwargs)
+        context['courses'] = Course.objects.all().count()
+        context['users'] = User.objects.all().count()
+        return context
+
 
 
 class CourseListView(SuperAdminMixin, ListView):

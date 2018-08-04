@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "_base.html" %}
+
+{% block content %}
 
 <h3>Question Sets of {{ chapter }} </h3>
 <h5><a href="{% url 'core:question_sets_add'  chapter.pk %}">Add Question Sets</a></h5>
@@ -18,5 +14,4 @@
     No Question Sets available
   </p>
 {% endfor %}
-</body>
-</html>
+{% endblock content %}

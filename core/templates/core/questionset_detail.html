@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Question Set | {{obj.name}}</title>
-</head>
-<body>
+{% extends "_base.html" %}
+{% block content %}
+
 	{{obj.name}}
 <div class="questions">
   <h3>
@@ -41,5 +38,4 @@
 </table>
 
 </div>
-</body>
-</html>
+{% endblock content %}
