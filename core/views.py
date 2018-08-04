@@ -22,27 +22,29 @@ class SuperAdminMixin(LoginRequiredMixin):
 
 # Create your views here.
 class CoresDashboardView(SuperAdminMixin, TemplateView):
-  template_name = 'core/cores_dashboard.html'
+    template_name = 'core/cores_dashboard.html'
 
-  def dispatch(self, request, *args, **kwargs):
-    if request.user.is_authenticated:
-      if request.user.is_superuser:
-        return super(SuperAdminMixin, self).dispatch(request, *args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+          if request.user.is_superuser:
+            return super(SuperAdminMixin, self).dispatch(request, *args, **kwargs)
 
-      else:
-        return HttpResponseRedirect('/spa#/')
+          else:
+            return HttpResponseRedirect('/spa#/')
 
-    return HttpResponseRedirect('/accounts/login')
+        return HttpResponseRedirect('/accounts/login')
 
 
 class CourseListView(SuperAdminMixin, ListView):
-  model = Course
-  template_name = 'core/course_list.html'
+    model = Course
+    template_name = 'core/course_list.html'
+    context_object_name = 'courses'
 
 
 class CourseDetailView(SuperAdminMixin, DetailView):
     model = Course
     template_name = 'core/course_detail.html'
+    context_object_name = 'course'
 
     def get_context_data(self, **kwargs):
         context = super(CourseDetailView, self).get_context_data(**kwargs)
@@ -71,15 +73,6 @@ class CourseDeleteView(SuperAdminMixin, DeleteView):
   success_url = reverse_lazy('core:course_list')
 
 
-class SubjectListView(SuperAdminMixin, ListView):
-    model = Subject
-    template_name = 'core/subject_list.html'
-    context_object_name = 'subjects'
-
-    def get_queryset(self):
-        return Subject.objects.filter(course_id=self.kwargs['course_id'])
-
-
 class SubjectDetailView(SuperAdminMixin, DetailView):
     model = Subject
     template_name = 'core/subject_detail.html'
@@ -105,106 +98,99 @@ class SubjectCreateView(SuperAdminMixin, CreateView):
 
 
 class SubjectUpdateView(SuperAdminMixin, UpdateView):
-  model = Subject
-  template_name = 'core/subject_form.html'
-  fields = ('name', 'course',)
-  success_url = reverse_lazy('core:subject_list')
+    model = Subject
+    template_name = 'core/subject_form.html'
+    form_class = SubjectCreateForm
+
+    def get_success_url(self):
+        return reverse_lazy('core:course_detail', args=(self.object.course.id,))
 
 
 class SubjectDeleteView(SuperAdminMixin, DeleteView):
-  model = Subject
-  template_name = 'core/subject_delete.html'
-  success_url = reverse_lazy('core:subject_list')
+    model = Subject
+    template_name = 'core/subject_delete.html'
 
-
-class UnitListView(SuperAdminMixin, ListView):
-  model = Unit
-  template_name = 'core/unit_list.html'
+    def get_success_url(self):
+      return reverse_lazy('core:course_detail', args=(self.object.course.id,))
 
 
 class UnitDetailView(SuperAdminMixin, DetailView):
-  model = Unit
-  template_name = 'core/unit_detail.html'
+    model = Unit
+    template_name = 'core/unit_detail.html'
+    context_object_name = 'unit'
 
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    context['chapters'] = Chapter.objects.filter(unit_id=self.kwargs['pk'])
-    return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['chapters'] = Chapter.objects.filter(unit_id=self.kwargs['pk'])
+        return context
 
 
 class UnitCreateView(SuperAdminMixin, CreateView):
-  model = Unit
-  # fields = ('name', 'subject',)
-  form_class = UnitCreateForm
-  template_name = 'core/unit_form.html'
-  success_url = reverse_lazy('core:unit_list')
+    model = Unit
+    form_class = UnitCreateForm
+    template_name = 'core/unit_form.html'
 
-  def form_valid(self, form):
-    form.instance.subject = get_object_or_404(Subject, pk=self.kwargs['pk'])
-    form.save()
-    return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.subject = get_object_or_404(Subject, pk=self.kwargs['subject_id'])
+        form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('core:subject_detail', args=(self.kwargs['subject_id'],))
 
 
 class UnitUpdateView(SuperAdminMixin, UpdateView):
-  model = Unit
-  template_name = 'core/unit_form.html'
-  fields = ('name', 'subject',)
-  success_url = reverse_lazy('core:unit_list')
+    model = Unit
+    template_name = 'core/unit_form.html'
+    form_class = UnitCreateForm
+
+    def get_success_url(self):
+        return reverse_lazy('core:subject_detail', args=(self.object.subject.id,))
 
 
 class UnitDeleteView(SuperAdminMixin, DeleteView):
-  model = Unit
-  template_name = 'core/unit_delete.html'
-  success_url = reverse_lazy('core:unit_list')
+    model = Unit
+    template_name = 'core/unit_delete.html'
 
-
-class ChapterListView(SuperAdminMixin, ListView):
-  model = Chapter
-  template_name = 'core/chapter_list.html'
-
-
-class ChapterDetailView(SuperAdminMixin, DetailView):
-  model = Chapter
-  template_name = 'core/chapter_detail.html'
+    def get_success_url(self):
+        return reverse_lazy('core:subject_detail', args=(self.object.subject.id,))
 
 
 class ChapterCreateView(SuperAdminMixin, CreateView):
-  model = Chapter
-  # fields = ('name', 'unit',)
-  form_class = ChapterCreateForm
-  template_name = 'core/chapter_form.html'
+    model = Chapter
+    form_class = ChapterCreateForm
+    template_name = 'core/chapter_form.html'
 
-  def form_valid(self, form):
-    form.instance.unit = get_object_or_404(Unit, pk=self.kwargs['pk'])
-    form.save()
-    return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.unit = get_object_or_404(Unit, pk=self.kwargs['pk'])
+        form.save()
+        return super().form_valid(form)
 
-  def get_success_url(self):
-    return reverse_lazy('core:unit_detail', args=(self.kwargs['pk'],))
+    def get_success_url(self):
+        return reverse_lazy('core:unit_detail', args=(self.kwargs['pk'],))
+
+
+class ChapterDetailView(SuperAdminMixin, DetailView):
+    model = Chapter
+    template_name = 'core/chapter_detail.html'
 
 
 class ChapterUpdateView(SuperAdminMixin, UpdateView):
-  model = Chapter
-  template_name = 'core/chapter_form.html'
-  fields = ('name', 'unit',)
-  success_url = reverse_lazy('core:chapter_list')
+    model = Chapter
+    template_name = 'core/chapter_form.html'
+    form_class = ChapterCreateForm
+
+    def get_success_url(self):
+        return reverse_lazy('core:unit_detail', args=(self.object.unit.id,))
 
 
 class ChapterDeleteView(SuperAdminMixin, DeleteView):
-  model = Chapter
-  template_name = 'core/chapter_delete.html'
-  success_url = reverse_lazy('core:chapter_list')
+    model = Chapter
+    template_name = 'core/chapter_delete.html'
+    success_url = reverse_lazy('core:chapter_list')
 
-
-class SubjectUnitView(SuperAdminMixin, TemplateView):
-  template_name = 'core/subject_unit.html'
-
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    context['subject'] = Subject.objects.get(id=self.kwargs['subject_pk'])
-    context['subject_unit'] = Unit.objects.filter(subject_id=self.kwargs['subject_pk'])
-    # context['chapters'] = Chapter.objects.filter(unit__subject_id=self.kwargs['subject_pk'])
-    return context
+    def get_success_url(self):
+        return reverse_lazy('core:unit_detail', args=(self.object.unit.id,))
 
 
 class QuestionSetsListView(SuperAdminMixin, ListView):
