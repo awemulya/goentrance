@@ -7,5 +7,9 @@ export default {
     return Api().get('questions/', {
       params: params
     })
+  },
+  fetchSet (questionSet) {
+    return Api().get('question-sets/' + questionSet + '/', {
+    })
   }
 }

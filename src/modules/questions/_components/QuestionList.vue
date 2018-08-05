@@ -9,7 +9,7 @@
           </v-card-media>
           <v-card-title primary-title>
             <div>
-              <div class="headline">Questions {{questions.length}}</div>
+              <div class="headline">Questions {{questions.length}} {{set}}</div>
               <span class="grey--text">Time 1 min</span>
             </div>
           </v-card-title>
@@ -141,6 +141,9 @@ export default {
   props: {
     questions: {
       type: Array
+    },
+    set: {
+      type: Object
     }
   },
   computed: {

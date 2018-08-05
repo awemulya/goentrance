@@ -1,5 +1,5 @@
 <template>
-  <QuestionList :questions="questions" />
+  <QuestionList :questions="questions" :set="set" />
 </template>
 
 <script>
@@ -14,7 +14,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      questions: '$_questions/questions'
+      questions: '$_questions/questions',
+      set: '$_questions/set'
     }),
     question_set () {
       // We will see what `params` is shortly
@@ -30,6 +31,7 @@ export default {
   },
   mounted () {
     this.$store.dispatch('$_questions/getQuestions', this.question_set)
+    this.$store.dispatch('$_questions/getSet', this.question_set)
   }
 }
 </script>
