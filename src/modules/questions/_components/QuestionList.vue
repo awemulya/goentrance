@@ -1,7 +1,7 @@
   <template>
   <v-layout row>
       <v-flex  xs12 sm6 offset-sm3>
-        <v-card v-show="!start && !end">
+        <v-card>
           <v-card-media
             v-bind:src="background"
             height="300px"
@@ -14,15 +14,12 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn flat @click="start =true" v-if="start==false">
-            Start
-            </v-btn>
-             <button type="button" class="btn btn-secondary" :disabled="counting" @click="countdown">
-    <countdown v-if="counting" :time="60000" :leading-zero="false" @countdownend="countdownend">
-      <template slot-scope="props">Fetch again {{ props.totalSeconds }} seconds later</template>
-    </countdown>
-    <span v-else>Fetch Verification Code</span>
-  </button>
+           <v-btn type="button" class="btn btn-secondary" @click="countdown">
+            <countdown v-if="counting" :time="time" :leading-zero="false" :emit-events=true @countdownend="countdownend" @countdownpause="countdownpause" ref="countdown">
+              <template slot-scope="props">Time , {{ props.hours }} hours, {{ props.minutes }} minutes,  {{ props.totalSeconds }} seconds </template>
+            </countdown>
+            <span v-else>Start Entrance</span>
+          </v-btn>
             <v-spacer></v-spacer>
             <v-btn icon @click="show = !show">
               <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
@@ -111,8 +108,6 @@
 
 <script>
 import VueCountdown from '@xkeshi/vue-countdown'
-var now = new Date()
-var newYear = new Date(now.getFullYear() + 1, 0, 1)
 
 export default {
   name: 'QuestionList',
@@ -128,7 +123,7 @@ export default {
     question: '',
     question_no: 0,
     counting: false,
-    time: newYear - now,
+    time: 10000,
     items: [
       { action: '15 min', headline: 'Brunch this weekend?', title: 'Ali Connors', subtitle: "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?" },
       { action: '2 hr', headline: 'Summer BBQ', title: 'me, Scrott, Jennifer', subtitle: "Wish I could come, but I'm out of town this weekend." },
@@ -161,13 +156,22 @@ export default {
       } else {
         console.log('exam completed')
         this.end = true
+        this.$refs.countdown.pause()
+        console.log(this.$refs.countdown.count)
       }
     },
     countdown: function () {
       this.counting = true
+      this.start = true
     },
     countdownend: function () {
-      this.counting = false
+      this.$refs.countdown.pause()
+      this.end = true
+      console.log(this.$refs.countdown.count)
+    },
+    countdownpause: function () {
+      console.log('paused')
+      console.log(this.$refs.countdown.count)
     }
   },
   watch: {
@@ -175,7 +179,7 @@ export default {
     start: function (newValue, oldValue) {
       this.question = this.questions[this.question_no]
     },
-    snackbar: function (newValue, oldValue) {
+    time: function (newValue, oldValue) {
       console.log(newValue)
     }
   }
