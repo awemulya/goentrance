@@ -341,10 +341,16 @@ class SignUp(generic.CreateView):
     template_name = 'core/signup.html'
 
 
-class UserProfileView(LoginRequiredMixin, DetailView):
+class UserProfileView(LoginRequiredMixin, TemplateView):
     model = User
-    context_object_name = 'user'
     template_name = 'core/user_profile.html'
+
+    def get_context_data(self, **kwargs):
+        data = super(UserProfileView, self).get_context_data(**kwargs)
+        data['user'] = User.objects.get(username=self.kwargs['username'])
+        return data
+
+
 
 
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
@@ -354,5 +360,5 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'core/user_profile_update.html'
 
     def get_success_url(self):
-        success_url = reverse_lazy('core:user_profile', args=(self.object.pk,))
+        success_url = reverse_lazy('core:user_profile', args=(self.object.username,))
         return success_url
