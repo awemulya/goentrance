@@ -45,4 +45,6 @@ urlpatterns = [
     path('option-add/<int:pk>', views.OptionAddView.as_view(), name='option_add'),
 
     path('signup/', views.SignUp.as_view(), name='signup'),
+    path('accounts/user-profile/<int:pk>', views.UserProfileView.as_view(), name='user_profile'),
+    path('accounts/user-profile-update/<int:pk>', views.UserProfileUpdateView.as_view(), name='user_profile_update'),  
 ]

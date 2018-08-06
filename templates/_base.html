@@ -113,7 +113,7 @@
               </li>
               
               <li class="nav-item">
-                <a class="nav-link " href="user-profile-lite.html">
+                <a class="nav-link " href="{% url 'core:user_profile' request.user.id %}">
                   <i class="material-icons">person</i>
                   <span>User Profile</span>
                 </a>
@@ -178,7 +178,7 @@
                     <span class="d-none d-md-inline-block">{{request.user}}</span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small">
-                    <a class="dropdown-item" href="user-profile-lite.html">
+                    <a class="dropdown-item" href="{% url 'core:user_profile' request.user.id %}">
                       <i class="material-icons">&#xE7FD;</i> Profile</a>
                     <a class="dropdown-item" href="components-blog-posts.html">
                       <i class="material-icons">vertical_split</i> Password Settings</a>

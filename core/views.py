@@ -34,7 +34,7 @@ class CoresDashboardView(SuperAdminMixin, TemplateView):
             return HttpResponseRedirect('/spa#/')
 
         return HttpResponseRedirect('/accounts/login')
-    
+
     def get_context_data(self, **kwargs):
         context = super(CoresDashboardView, self).get_context_data(**kwargs)
         context['courses'] = Course.objects.all().count()
@@ -316,6 +316,23 @@ class OptionAddView(SuperAdminMixin, CreateView):
 
 
 class SignUp(generic.CreateView):
-  form_class = UserCreationForm
-  success_url = reverse_lazy('login')
-  template_name = 'core/signup.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'core/signup.html'
+
+
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = User
+    context_object_name = 'user'
+    template_name = 'core/user_profile.html'
+
+
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    fields = ('first_name', 'last_name', 'email')
+    context_object_name = 'user'
+    template_name = 'core/user_profile_update.html'
+
+    def get_success_url(self):
+        success_url = reverse_lazy('core:user_profile', args=(self.object.pk,))
+        return success_url
