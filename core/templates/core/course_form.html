@@ -1,5 +1,18 @@
 {% extends "_base.html" %}
 
+{% block nav %}
+  <nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="{% url 'core:course_list' %}">Courses</a>
+			</li>
+      {% if object %}
+        <li class="breadcrumb-item active" aria-current="page">{{object}}</li>
+
+      {% endif %}
+		</ol>
+	</nav>
+{% endblock nav %}
+
 {% block content %}
 
 <h3>Course{% if object %}Edit{% else %}Add{% endif %}</h3>

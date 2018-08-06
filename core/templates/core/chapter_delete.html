@@ -1,5 +1,17 @@
 {% extends "_base.html" %}
 
+{% block nav %}
+  <nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="{% url 'core:course_list' %}">Courses</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'core:course_detail' object.unit.subject.course.id %}">{{ object.unit.subject.course}}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'core:subject_detail' object.unit.subject.id %}">{{ object.unit.subject }}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'core:unit_detail' object.unit.id %}">{{ object.unit }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{object}}</li>
+		</ol>
+	</nav>
+{% endblock nav %}
+
 {% block content %}
 
 <form method="POST" action="{% url 'core:chapter_delete' object.id %}">{% csrf_token %}

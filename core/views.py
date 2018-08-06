@@ -42,7 +42,6 @@ class CoresDashboardView(SuperAdminMixin, TemplateView):
         return context
 
 
-
 class CourseListView(SuperAdminMixin, ListView):
     model = Course
     template_name = 'core/course_list.html'
@@ -76,9 +75,9 @@ class CourseUpdateView(SuperAdminMixin, UpdateView):
 
 
 class CourseDeleteView(SuperAdminMixin, DeleteView):
-  model = Course
-  template_name = 'core/course_delete.html'
-  success_url = reverse_lazy('core:course_list')
+    model = Course
+    template_name = 'core/course_delete.html'
+    success_url = reverse_lazy('core:course_list')
 
 
 class SubjectDetailView(SuperAdminMixin, DetailView):
@@ -103,6 +102,11 @@ class SubjectCreateView(SuperAdminMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('core:course_detail', args=(self.kwargs['course_id'],))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['course'] = get_object_or_404(Course, id=self.kwargs['course_id'])
+        return context
 
 
 class SubjectUpdateView(SuperAdminMixin, UpdateView):
@@ -146,6 +150,14 @@ class UnitCreateView(SuperAdminMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('core:subject_detail', args=(self.kwargs['subject_id'],))
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        subject_id = self.kwargs['subject_id']
+        context['subject'] = get_object_or_404(Subject, id=subject_id)
+        context['course'] = get_object_or_404(Course, subjects=subject_id)
+
+        return context
+
 
 class UnitUpdateView(SuperAdminMixin, UpdateView):
     model = Unit
@@ -174,13 +186,16 @@ class ChapterCreateView(SuperAdminMixin, CreateView):
         form.save()
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        unit_id = self.kwargs['pk']
+        # context['subject'] = get_object_or_404(Subject, id=subject_id)
+        context['unit'] = get_object_or_404(Unit, id=unit_id)
+
+        return context
+
     def get_success_url(self):
         return reverse_lazy('core:unit_detail', args=(self.kwargs['pk'],))
-
-
-class ChapterDetailView(SuperAdminMixin, DetailView):
-    model = Chapter
-    template_name = 'core/chapter_detail.html'
 
 
 class ChapterUpdateView(SuperAdminMixin, UpdateView):
@@ -228,6 +243,11 @@ class QuestionSetsFormView(SuperAdminMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('core:question_sets', args=(self.kwargs['chapter_id'],))
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(QuestionSetsFormView, self).get_context_data(**kwargs)
+        context['chapter'] = get_object_or_404(Chapter, id=self.kwargs['chapter_id'])
+        return context
+
 
 class QuestionSetsUpdateView(SuperAdminMixin, UpdateView):
     template_name = 'core/question_sets_form.html'
@@ -258,15 +278,15 @@ class QuestionSetsDeleteView(SuperAdminMixin, DeleteView):
 
 
 class QuestionSetsDashboard(DetailView):
-  model = QuestionSet
-  context_object_name = 'obj'
+    model = QuestionSet
+    context_object_name = 'obj'
 
-  def get_context_data(self, **kwargs):
-      context = super(QuestionSetsDashboard, self).get_context_data(**kwargs)
-      question_set = context.get('obj')
-      questions = question_set.questions.all()
-      context['questions'] = questions
-      return context
+    def get_context_data(self, **kwargs):
+        context = super(QuestionSetsDashboard, self).get_context_data(**kwargs)
+        question_set = context.get('obj')
+        questions = question_set.questions.all()
+        context['questions'] = questions
+        return context
 
 
 class QuestionAddView(SuperAdminMixin, CreateView):

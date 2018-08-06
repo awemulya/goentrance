@@ -3,6 +3,7 @@
 	<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'core:course_list' %}">Courses</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'core:course_detail' chapter.unit.subject.course.id %}">{{ chapter.unit.subject.course }}</a></li>
         <li class="breadcrumb-item"><a href="{% url 'core:subject_detail' chapter.unit.subject.id %}">{{chapter.unit.subject}}</a></li>
 				<li class="breadcrumb-item"><a href="{% url 'core:unit_detail' chapter.unit.id %}">{{chapter.unit}}</a></li>
 				<li class="breadcrumb-item active" aria-current="page">{{chapter}}</li>
@@ -17,7 +18,7 @@
  {{ forloop.counter }}.
 
 <a href="{% url 'core:question_set_dashboard' set.pk %}">{{ set.name }}</a>
-<a href="{% url 'core:question_sets_update' set.pk %}">Edit</a> <a href="{% url 'core:question_sets_delete' set.pk %}">Delete</a>
+<a href="{% url 'core:question_sets_update' set.pk %}">Edit</a> <a href="{% url 'core:question_sets_delete' set.pk %}">Delete</a><br>
   {% empty %}
   <p>
     No Question Sets available

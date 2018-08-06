@@ -4,7 +4,7 @@ from rest_framework import routers
 
 from django.urls import path, include
 from .views import CoresDashboardView, CourseListView, CourseDetailView, CourseCreateView, CourseUpdateView, CourseDeleteView, SubjectDetailView, SubjectCreateView, SubjectUpdateView, SubjectDeleteView, \
-    UnitDetailView, UnitCreateView, UnitUpdateView, UnitDeleteView, ChapterDetailView, ChapterCreateView, ChapterUpdateView, ChapterDeleteView
+    UnitDetailView, UnitCreateView, UnitUpdateView, UnitDeleteView, ChapterCreateView, ChapterUpdateView, ChapterDeleteView
 
 
 app_name = 'core'
@@ -27,7 +27,6 @@ urlpatterns = [
     path('unit-edit/<int:pk>/', UnitUpdateView.as_view(), name='unit_edit'),
     path('unit-delete/<int:pk>/', UnitDeleteView.as_view(), name='unit_delete'),
 
-    path('chapter-detail/<int:pk>/', ChapterDetailView.as_view(), name='chapter_detail'),
     path('chapter-add/<int:pk>', ChapterCreateView.as_view(), name='chapter_add'),
     path('chapter-edit/<int:pk>/', ChapterUpdateView.as_view(), name='chapter_edit'),
     path('chapter-delete/<int:pk>/', ChapterDeleteView.as_view(), name='chapter_delete'),

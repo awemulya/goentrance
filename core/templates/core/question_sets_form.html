@@ -1,5 +1,30 @@
 {% extends "_base.html" %}
 
+{% block nav %}
+  <nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="{% url 'core:course_list' %}">Courses</a></li>
+    {% if object %}
+          <li class="breadcrumb-item"><a href="{% url 'core:course_detail' object.chapter.unit.subject.course.id %}">{{ object.chapter.unit.subject.course }}</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'core:subject_detail' object.chapter.unit.subject.id %}">{{ object.chapter.unit.subject }}</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'core:unit_detail' object.chapter.unit.id %}">{{object.chapter.unit}}</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'core:question_sets' object.chapter.id %}">{{ object.chapter}}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{object}}</li>
+
+    {% else %}
+        <li class="breadcrumb-item"><a href="{% url 'core:course_detail' chapter.unit.subject.course.id %}">{{ chapter.unit.subject.course }}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'core:subject_detail' chapter.unit.subject.id %}">{{ chapter.unit.subject }}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'core:unit_detail' chapter.unit.id %}">{{ chapter.unit}}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'core:question_sets' chapter.id %}">{{ chapter}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Create Question Set</li>
+
+
+    {% endif %}
+
+		</ol>
+	</nav>
+{% endblock nav %}
+
 {% block content %}
 
 <form action="" method="post">{% csrf_token %}
