@@ -9,17 +9,20 @@
           </v-card-media>
           <v-card-title primary-title>
             <div>
-              <div class="headline">Questions {{questions.length}}</div>
+              <div class="headline">Questions {{questions.length}} {{set}}</div>
               <span class="grey--text">Time 1 min</span>
             </div>
           </v-card-title>
           <v-card-actions>
-           <v-btn type="button" class="btn btn-secondary" @click="countdown">
-            <countdown v-if="counting" :time="time" :leading-zero="false" :emit-events=true @countdownend="countdownend" @countdownpause="countdownpause" ref="countdown">
-              <template slot-scope="props">Time , {{ props.hours }} hours, {{ props.minutes }} minutes,  {{ props.totalSeconds }} seconds </template>
+           <v-btn @click="countdown" v-if="!end">
+            <countdown v-if="counting" :time="time" :leading-zero="false" :emit-events=true @countdownend="countdownend"  ref="countdown">
+              <template slot-scope="props">Time Remaining{{ props.hours }} hours, {{ props.minutes }} minutes,  {{ props.totalSeconds }} seconds </template>
             </countdown>
             <span v-else>Start Entrance</span>
-          </v-btn>
+           </v-btn>
+           <v-btn v-if="end">
+              <span>Time Taken :{{timetaken}}</span>
+           </v-btn>
             <v-spacer></v-spacer>
             <v-btn icon @click="show = !show">
               <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
@@ -123,7 +126,7 @@ export default {
     question: '',
     question_no: 0,
     counting: false,
-    time: 10000,
+    time: 5000,
     items: [
       { action: '15 min', headline: 'Brunch this weekend?', title: 'Ali Connors', subtitle: "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?" },
       { action: '2 hr', headline: 'Summer BBQ', title: 'me, Scrott, Jennifer', subtitle: "Wish I could come, but I'm out of town this weekend." },
@@ -138,11 +141,18 @@ export default {
   props: {
     questions: {
       type: Array
+    },
+    set: {
+      type: Object
     }
   },
   computed: {
     background () {
       return require('@/assets/yatra.jpg')
+    },
+    timetaken () {
+      var taken = this.time - this.$refs.countdown.count
+      return this.msToHMS(taken)
     }
   },
   methods: {
@@ -157,7 +167,6 @@ export default {
         console.log('exam completed')
         this.end = true
         this.$refs.countdown.pause()
-        console.log(this.$refs.countdown.count)
       }
     },
     countdown: function () {
@@ -167,11 +176,14 @@ export default {
     countdownend: function () {
       this.$refs.countdown.pause()
       this.end = true
-      console.log(this.$refs.countdown.count)
     },
-    countdownpause: function () {
-      console.log('paused')
-      console.log(this.$refs.countdown.count)
+    msToHMS (ms) {
+      var seconds = ms / 1000
+      var hours = parseInt(seconds / 3600) // 3,600 seconds in 1 hour
+      seconds = seconds % 3600 // seconds remaining after extracting hours
+      var minutes = parseInt(seconds / 60) // 60 seconds in 1 minute
+      seconds = seconds % 60
+      return (hours + ' Hours, ' + minutes + ' Minutes, ' + seconds + ' Seconds')
     }
   },
   watch: {

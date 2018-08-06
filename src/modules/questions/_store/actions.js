@@ -11,6 +11,17 @@ const getQuestions = (context, questionSet) => {
     })
 }
 
+const getSet = (context, questionSet) => {
+  api.fetchSet(questionSet)
+    .then((response) => {
+      context.commit('SET_UPDATED', response.data)
+    })
+    .catch((error) => {
+      // eslint-disable-next-line
+      console.error(error);
+    })
+}
+
 export default {
-  getQuestions
+  getQuestions, getSet
 }
